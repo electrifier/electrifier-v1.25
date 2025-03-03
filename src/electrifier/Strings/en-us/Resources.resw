@@ -147,4 +147,7 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
+  <data name="Shell_FileManager.Content" xml:space="preserve">
+    <value>FileManager</value>
+  </data>
 </root>

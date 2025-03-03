@@ -14,4 +14,10 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Components\Win32Shell\ExplorerBrowser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
 </Project>

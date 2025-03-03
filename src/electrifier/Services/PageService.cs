@@ -18,6 +18,7 @@ public class PageService : IPageService
         Configure<WebViewViewModel, WebViewPage>();
         Configure<BlankViewModel, BlankPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<FileManagerViewModel, FileManagerPage>();
     }
 
     public Type GetPageType(string key)
