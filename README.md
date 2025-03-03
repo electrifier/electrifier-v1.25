@@ -20,10 +20,9 @@
 ## Inspiration 
 [Dawnbreed](https://www.discogs.com/artist/885335-Dawnbreed), Psychotic Waltz, Silence of Thoughts, King's X
 ---
-_Eine Scheunenproduktion_. No animals 🐯 were harmed.
-----
-©️ Copyright (c) 2025: Thorsten Jung, tajbender
 
-🔓 electrifier is Open Source. [See Apache License 2.0 Disclaimer](https://opensource.org/license/apache-2-0)
-
-📆 02/03/2025 - _May the 4th be with you_
+|||
+|:--------------|--------:|
+|©️ Copyright 2025 Thorsten Jung, tajbender|_Eine Scheunenproduktion_. No animals 🐯 were harmed.|
+|🔓 electrifier is Open Source. [Apache License, Version 2.0](https://opensource.org/license/apache-2-0)|📆 02/03/2025 - _May the 4th be with you_|
+|||
