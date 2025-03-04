@@ -8,7 +8,6 @@
     xmlns:behaviors="using:electrifier.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
-
     <Grid>
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
@@ -53,7 +52,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Blank" helpers:NavigationHelper.NavigateTo="electrifier.ViewModels.BlankViewModel">
+                <NavigationViewItem x:Uid="Shell_Blank" helpers:NavigationHelper.NavigateTo="electrifier.ViewModels.FileManagementViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
                     </NavigationViewItem.Icon>

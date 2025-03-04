@@ -5,14 +5,13 @@ namespace electrifier.Views;
 
 public sealed partial class FileManagementPage : Page
 {
-    public FileManagementViewModel ViewModel
-    {
-        get;
-    }
+    private readonly FileManagementViewModel viewModel;
+
+    public FileManagementViewModel ViewModel => viewModel;
 
     public FileManagementPage()
     {
-        ViewModel = App.GetService<FileManagementViewModel>();
+        viewModel = App.GetService<FileManagementViewModel>();
         InitializeComponent();
     }
 }
