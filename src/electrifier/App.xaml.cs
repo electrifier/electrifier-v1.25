@@ -75,8 +75,8 @@ public partial class App : Application
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
-            services.AddTransient<BlankViewModel>();
-            services.AddTransient<BlankPage>();
+            services.AddTransient<FileManagementViewModel>();
+            services.AddTransient<FileManagementPage>();
             services.AddTransient<WebViewViewModel>();
             services.AddTransient<WebViewPage>();
             services.AddTransient<MainViewModel>();

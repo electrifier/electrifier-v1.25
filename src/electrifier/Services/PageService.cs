@@ -16,7 +16,7 @@ public class PageService : IPageService
     {
         Configure<MainViewModel, MainPage>();
         Configure<WebViewViewModel, WebViewPage>();
-        Configure<BlankViewModel, BlankPage>();
+        Configure<FileManagementViewModel, FileManagementPage>();
         Configure<SettingsViewModel, SettingsPage>();
     }
 
