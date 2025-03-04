@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using electrifier.Contracts.Services;
 using electrifier.ViewModels;
 using electrifier.Views;
-
 using Microsoft.UI.Xaml.Controls;
 
 namespace electrifier.Services;

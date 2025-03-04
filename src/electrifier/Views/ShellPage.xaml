@@ -24,8 +24,7 @@
                        Style="{StaticResource CaptionTextBlockStyle}"
                        Margin="28,0,0,0"/>
         </Grid>
-        <NavigationView
-            x:Name="NavigationViewControl"
+        <NavigationView x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
@@ -52,7 +51,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Blank" helpers:NavigationHelper.NavigateTo="electrifier.ViewModels.FileManagementViewModel">
+                <NavigationViewItem x:Uid="Shell_FileManagement" helpers:NavigationHelper.NavigateTo="electrifier.ViewModels.FileManagementViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
                     </NavigationViewItem.Icon>

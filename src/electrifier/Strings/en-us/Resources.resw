@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>electrifier</value>
+    <value>electrifier desktop for WinUI</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>electrifier</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
+    <value>Workbench</value>
   </data>
   <data name="WebView_Loading.Text" xml:space="preserve">
     <value>Loading...</value>
@@ -133,16 +133,16 @@
     <value>Page failed to load. Check connection and reload.</value>
   </data>
   <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser back</value>
+    <value>Browse back in Navigation History</value>
   </data>
   <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser back</value>
+    <value>Browse back</value>
   </data>
   <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser forward</value>
+    <value>Browse forward in Navigation History</value>
   </data>
   <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser forward</value>
+    <value>Browse forward</value>
   </data>
   <data name="WebView_Reload.Content" xml:space="preserve">
     <value>Reload</value>
@@ -181,7 +181,7 @@
     <value>Default</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
+    <value>About electrifier</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>electrifier desktop.</value>
