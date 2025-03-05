@@ -8,8 +8,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock Text="TODO: Add ExplorerBrowser content here."
-                       Margin="12"
-                       Style="{StaticResource SubtitleTextBlockStyle}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.ColumnSpan="3"
+                   Text="TODO: Add ExplorerBrowser content here."
+                   Margin="12"
+                   Style="{StaticResource SubtitleTextBlockStyle}" />
+        <!--<ShellNamespaceTreeControl x:Name="ShellTreeView"
+                                             Grid.Column="0"
+                                             BorderThickness="3"
+                                             HorizontalAlignment="Stretch" />
+            <GridSplitter Grid.Column="1"/>
+            <ShellListView x:Name="ShellListView"
+                                 Grid.Column="2"
+                                 BorderThickness="3" />-->
     </Grid>
 </UserControl>
