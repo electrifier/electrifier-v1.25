@@ -5,14 +5,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:electrifier.Behaviors"
-    behaviors:NavigationViewHeaderBehavior.HeaderMode="Always"
+    behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <CommandBar x:Name="CommandBar"
                     Grid.Row="0"
                     DefaultLabelPosition="Right"
-                    HorizontalAlignment="Left"
-                    IsOpen="False">
+                    HorizontalAlignment="Left">
             <!-- CommandBar.Visibility="{x:Bind TopCommandBarVisibility}" -->
             <AppBarButton Icon="OpenFile"
                           Label="New">
@@ -216,6 +220,61 @@
                               Label="Options"
                               IsEnabled="False" />
             </CommandBar.SecondaryCommands>
+        </CommandBar>
+        <StackPanel x:Name="ContentStackPanel"
+                    Grid.Row="1"
+                    Orientation="Vertical">
+            <TextBlock Text="TODO: Add File Management content here."
+                       Margin="12"
+                       Style="{StaticResource SubtitleTextBlockStyle}" />
+        </StackPanel>
+        <CommandBar x:Name="StatusCommandBar"
+                                        Grid.Row="2"
+                    DefaultLabelPosition="Collapsed"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center">
+            <AppBarButton IsCompact="True"
+                          IsEnabled="False">
+                <TextBlock>
+                    <Run FontWeight="SemiBold"
+                         Text="Items: " />
+                </TextBlock>
+            </AppBarButton>
+            <AppBarSeparator />
+            <AppBarButton IsCompact="True"
+                          IsEnabled="False">
+                <TextBlock>
+                    <Run FontWeight="SemiBold"
+                         Text="Folders: " />
+                </TextBlock>
+            </AppBarButton>
+            <AppBarSeparator />
+            <AppBarButton IsCompact="True"
+                          IsEnabled="False">
+                <TextBlock>
+                    <Run FontWeight="SemiBold"
+                         Text="Files: " />
+                </TextBlock>
+            </AppBarButton>
+            <AppBarSeparator />
+            <AppBarButton IsCompact="True"
+                          IsEnabled="False">
+                <TextBlock>
+                    <Run FontWeight="SemiBold"
+                         Text="Size: " />
+                    <Run Text="KB" />
+                </TextBlock>
+            </AppBarButton>
+            <AppBarSeparator />
+            <AppBarButton IsCompact="True"
+                          IsEnabled="False">
+                <TextBlock>
+                    <Run FontWeight="SemiBold"
+                         Text="Hidden: " />
+                </TextBlock>
+            </AppBarButton>
         </CommandBar>
     </Grid>
 </Page>
