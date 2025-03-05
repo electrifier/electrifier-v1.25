@@ -49,6 +49,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItemSeparator />
                 <NavigationViewItem x:Uid="Shell_WebView" helpers:NavigationHelper.NavigateTo="electrifier.ViewModels.WebViewViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
