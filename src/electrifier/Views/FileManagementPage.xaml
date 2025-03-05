@@ -8,6 +8,214 @@
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Always"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
-        
+        <CommandBar x:Name="CommandBar"
+                    Grid.Row="0"
+                    DefaultLabelPosition="Right"
+                    HorizontalAlignment="Left"
+                    IsOpen="False">
+            <!-- CommandBar.Visibility="{x:Bind TopCommandBarVisibility}" -->
+            <AppBarButton Icon="OpenFile"
+                          Label="New">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <AppBarButton Icon="Folder"
+                                          Label="Folder"
+                                          IsEnabled="False" />
+                            <AppBarButton Icon="Link"
+                                          Label="Shortcut"
+                                          IsEnabled="False" />
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarSeparator />
+            <AppBarButton Icon="Cut"
+                          Label="Cut" />
+            <AppBarButton Icon="Copy"
+                          Label="Copy" />
+            <AppBarButton Icon="Paste"
+                          Label="Paste" />
+            <AppBarButton Icon="Rename"
+                          Label="Rename" />
+            <AppBarButton Icon="Share"
+                          Label="Share" />
+            <AppBarButton Icon="Delete"
+                          Label="Delete" />
+            <AppBarSeparator />
+            <AppBarElementContainer>
+                <SplitButton x:Name="SortSplitButton"
+                             Content="Sort">
+                    <SplitButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <Button Content="Name"
+                                        IsEnabled="False" />
+                                <Button Content="Date Modified"
+                                        IsEnabled="False" />
+                                <Button Content="Type"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="More"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="Ascending"
+                                        IsEnabled="False" />
+                                <Button Content="Descending"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="Group by"
+                                        IsEnabled="False" />
+                            </StackPanel>
+                        </Flyout>
+                    </SplitButton.Flyout>
+                    <SplitButton.Resources>
+                        <TeachingTip x:Name="SortSplitButtonTeachingTip"
+                                     Title="TODO: Add Sort and Group options."
+                                     Subtitle="Use the dropdown button option to save your item and create another."
+                                     Target="{x:Bind SortSplitButton}" />
+                    </SplitButton.Resources>
+                </SplitButton>
+            </AppBarElementContainer>
+            <AppBarElementContainer>
+                <SplitButton x:Name="ViewSplitButton"
+                             Content="View">
+                    <SplitButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <Button Content="Tiles"
+                                        IsEnabled="False" />
+                                <Button Content="Content"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="Details pane"
+                                        IsEnabled="False" />
+                                <Button Content="Preview pane"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="Show"
+                                        IsEnabled="False" />
+                                <Button Content="~"
+                                        IsEnabled="False" />
+                                <Button Content="Two Pages"
+                                        IsEnabled="False" />
+                                <!--  Glyph: E89A, TwoPage  -->
+                                <AppBarButton Icon="TwoPage"
+                                              Label="Double pane mode"
+                                              IsEnabled="False" />
+                                <AppBarButton Icon="Refresh"
+                                              Label="Refresh"
+                                              IsEnabled="False" />
+                                <AppBarButton Icon="Orientation"
+                                              Label="Orientation"
+                                              IsEnabled="False" />
+                            </StackPanel>
+                        </Flyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+            </AppBarElementContainer>
+            <AppBarButton Icon="Filter"
+                          Label="Filter">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <AppBarButton Icon="Home"
+                                          Label="Home" />
+                            <AppBarButton Icon="Edit"
+                                          Label="Work" />
+                            <AppBarButton Icon="Pictures"
+                                          Label="Photos" />
+                            <AppBarButton Icon="Important"
+                                          Label="Important" />
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarElementContainer>
+                <SplitButton x:Name="FilterSplitButton"
+                             Content="Filter">
+                    <SplitButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <RadioButtons>
+                                    <RadioButton Content="Show all Folders"></RadioButton>
+                                    <RadioButton Content="Hide all Folders"></RadioButton>
+                                    <RadioButton Content="Hide hidden Folders"></RadioButton>
+                                </RadioButtons>
+                                <AppBarSeparator />
+                                <RadioButtons>
+                                    <RadioButton Content="All Files"></RadioButton>
+                                    <RadioButton Content="No Hidden Folders"></RadioButton>
+                                    <RadioButton Content="Hide Folders"></RadioButton>
+                                </RadioButtons>
+                                <AppBarSeparator />
+                                <RadioButtons>
+                                    <RadioButton Content="Always show Thumbnails"></RadioButton>
+                                    <RadioButton Content="Fast mode (Use Stock Icons only)"></RadioButton>
+                                </RadioButtons>
+                            </StackPanel>
+                        </Flyout>
+                    </SplitButton.Flyout>
+                    <SplitButton.Resources>
+                        <TeachingTip x:Name="FilterSplitButtonTeachingTip"
+                                     Title="TODO: Add filter options title text."
+                                     Subtitle="Use the dropdown button option to save your item and create another."
+                                     Target="{x:Bind FilterSplitButton}" />
+                    </SplitButton.Resources>
+                </SplitButton>
+            </AppBarElementContainer>
+            <AppBarSeparator />
+            <AppBarElementContainer>
+                <SplitButton x:Name="TagsSplitButton"
+                             Content="Tags">
+                    <SplitButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <AppBarButton Icon="Home"
+                                              Label="Home" />
+                                <AppBarButton Icon="Edit"
+                                              Label="Work" />
+                                <AppBarButton Icon="Pictures"
+                                              Label="Photos" />
+                                <AppBarButton Icon="Important"
+                                              Label="Important" />
+                            </StackPanel>
+                        </Flyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+            </AppBarElementContainer>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Undo"
+                              Label="Undo"
+                              IsEnabled="False" />
+                <AppBarSeparator />
+                <AppBarButton Icon="Pin"
+                              Label="Pin to Quick access"
+                              IsEnabled="False" />
+                <AppBarSeparator />
+                <AppBarButton Icon="SelectAll"
+                              Label="Select all"
+                              IsEnabled="False" />
+                <!-- TODO: The Icon="ViewAll" is the one, that Windows Explorer uses for `Select none` -->
+                <AppBarButton Icon="ClearSelection"
+                              Label="Select none"
+                              IsEnabled="False" />
+                <AppBarButton Icon="Shuffle"
+                              Label="Invert selection"
+                              IsEnabled="False" />
+                <AppBarSeparator />
+                <AppBarButton Icon="Repair"
+                              Label="Properties"
+                              IsEnabled="False" />
+                <AppBarButton Icon="Setting"
+                              Label="Options"
+                              IsEnabled="False" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
     </Grid>
 </Page>
