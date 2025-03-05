@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:behaviors="using:electrifier.Behaviors"
+    xmlns:behaviors="using:electrifier.Behaviors" 
+    xmlns:controls="using:electrifier.Controls"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
@@ -221,13 +222,7 @@
                               IsEnabled="False" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
-        <StackPanel x:Name="ContentStackPanel"
-                    Grid.Row="1"
-                    Orientation="Vertical">
-            <TextBlock Text="TODO: Add File Management content here."
-                       Margin="12"
-                       Style="{StaticResource SubtitleTextBlockStyle}" />
-        </StackPanel>
+        <controls:ExplorerBrowser Grid.Row="1"/>
         <CommandBar x:Name="StatusCommandBar"
                                         Grid.Row="2"
                     DefaultLabelPosition="Collapsed"
