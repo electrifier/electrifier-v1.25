@@ -13,17 +13,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.ColumnSpan="3"
-                   Text="TODO: Add ExplorerBrowser content here."
-                   Margin="12"
-                   Style="{StaticResource SubtitleTextBlockStyle}" />
-        <!--<ShellNamespaceTreeControl x:Name="ShellTreeView"
-                                             Grid.Column="0"
-                                             BorderThickness="3"
-                                             HorizontalAlignment="Stretch" />
-            <GridSplitter Grid.Column="1"/>
-            <ShellListView x:Name="ShellListView"
-                                 Grid.Column="2"
-                                 BorderThickness="3" />-->
+        <local:ShellNamespaceTreeControl x:Name="ShellTreeView"
+                                         Grid.Column="0"
+                                         BorderThickness="3"
+                                         HorizontalAlignment="Stretch" />
+        <local:ShellListView x:Name="ShellListView"
+                             Grid.Column="2"
+                             Grid.ColumnSpan="2"
+                             BorderThickness="3" />
     </Grid>
 </UserControl>

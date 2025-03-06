@@ -16,6 +16,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\ExplorerBrowser.xaml" />
+    <None Remove="Controls\ShellListView.xaml" />
+    <None Remove="Controls\ShellNamespaceTreeControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +39,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\ShellNamespaceTreeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\ShellListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\ExplorerBrowser.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
