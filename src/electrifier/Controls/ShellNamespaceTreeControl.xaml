@@ -6,12 +6,33 @@
     xmlns:local="using:electrifier.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:electrifier.Controls.Helpers"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Grid.ColumnSpan="3"
-                   Text="TODO: Add ShellNamespaceTreeControl content here."
-                   Margin="12"
-                   Style="{StaticResource SubtitleTextBlockStyle}" />
+    <Grid Width="192">
+        <Grid.Resources>
+            <DataTemplate x:Name="BrowserItemTemplate"
+                          x:DataType="helpers:BrowserItem">
+                <TreeViewItem HasUnrealizedChildren="{x:Bind HasUnrealizedChildren}"
+                              IsSelected="{x:Bind TreeViewItemIsSelected}"
+                              ItemsSource="{x:Bind ChildItems}">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Stretch"
+                                    MaxHeight="23"
+                                    Orientation="Horizontal">
+                            <!-- todo: add overlay for shared, links etc. -->
+                            <Image Name="Image"
+                                   Source="{x:Bind SoftwareBitmap}"
+                                   Visibility="Visible" />
+                            <TextBlock x:Name="TextBlock"
+                                       Margin="5,0,5,0"
+                                       Text="{x:Bind DisplayName}" />
+                        </StackPanel>
+                    </Grid>
+                </TreeViewItem>
+            </DataTemplate>
+        </Grid.Resources>
+        <TreeView x:Name="TreeView"
+                  ItemTemplate="{StaticResource BrowserItemTemplate}" />
     </Grid>
 </UserControl>
