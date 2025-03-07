@@ -23,7 +23,7 @@ namespace electrifier.Controls;
 
 public sealed partial class ShellListView : UserControl
 {
-//    public ItemsView NativeItemsView => ItemsView;
+    internal ItemsView NativeItemsView => ItemsView;
     public ObservableCollection<BrowserItem> Items = [];
 //    public readonly AdvancedCollectionView AdvancedCollectionView;
 

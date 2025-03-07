@@ -42,9 +42,7 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         {
             if (e.AddedItems.Count > 0)
             {
-                var item = e.AddedItems[0] as BrowserItem;
-
-                if (item != null)
+                if (e.AddedItems[0] is BrowserItem item)
                 {
                     var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
                     SelectionChanged(this, args);
