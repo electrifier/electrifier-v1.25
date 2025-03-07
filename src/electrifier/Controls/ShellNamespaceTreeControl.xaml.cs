@@ -38,17 +38,17 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
 //        AdvancedCollectionView = new AdvancedCollectionView(TreeItems, true);
 //        NativeTreeView.ItemsSource = AdvancedCollectionView;
 
-        SelectionChanged = (sender, e) =>
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                if (e.AddedItems[0] is BrowserItem item)
-                {
-                    var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
-                    SelectionChanged(this, args);
-                }
-            }
-        };
+        //SelectionChanged = (sender, e) =>
+        //{
+        //    if (e.AddedItems.Count > 0)
+        //    {
+        //        if (e.AddedItems[0] is BrowserItem item)
+        //        {
+        //            var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
+        //            SelectionChanged(this, args);
+        //        }
+        //    }
+        //};
 
         Loading += ShellNamespaceTreeControl_Loading;
     }

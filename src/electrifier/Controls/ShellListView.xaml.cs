@@ -31,6 +31,6 @@ public sealed partial class ShellListView : UserControl
     {
         this.InitializeComponent();
 
-        Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
+        //Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
     }
 }

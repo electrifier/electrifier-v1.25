@@ -61,6 +61,20 @@ public sealed partial class ExplorerBrowser : UserControl
         SecondaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
     }
 
+    /*
+            //SelectionChanged = (sender, e) =>
+            //{
+            //    if (e.AddedItems.Count > 0)
+            //    {
+            //        if (e.AddedItems[0] is BrowserItem item)
+            //        {
+            //            var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
+            //            SelectionChanged(this, args);
+            //        }
+            //    }
+            //};
+
+     */
     private void NativeTreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
