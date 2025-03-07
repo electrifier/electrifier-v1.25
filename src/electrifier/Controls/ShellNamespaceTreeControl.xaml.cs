@@ -27,16 +27,16 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
 {
     public TreeView NativeTreeView => TreeView;
     public ObservableCollection<BrowserItem> Items;
-//    internal readonly AdvancedCollectionView AdvancedCollectionView;
-//    public static ShellNamespaceService NamespaceService => App.GetService<ShellNamespaceService>();
+    //    internal readonly AdvancedCollectionView AdvancedCollectionView;
+    //    public static ShellNamespaceService NamespaceService => App.GetService<ShellNamespaceService>();
 
     public ShellNamespaceTreeControl()
     {
         InitializeComponent();
         DataContext = this;
         Items = [];
-//        AdvancedCollectionView = new AdvancedCollectionView(TreeItems, true);
-//        NativeTreeView.ItemsSource = AdvancedCollectionView;
+        //        AdvancedCollectionView = new AdvancedCollectionView(TreeItems, true);
+        //        NativeTreeView.ItemsSource = AdvancedCollectionView;
 
         //SelectionChanged = (sender, e) =>
         //{
@@ -52,16 +52,16 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
 
         Loading += ShellNamespaceTreeControl_Loading;
 
-        TreeView.SelectionChanged += (sender, e) =>
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                if (e.AddedItems[0] is BrowserItem item)
-                {
-                    SelectionChanged(this, e);
-                }
-            }
-        };
+        //TreeView.SelectionChanged += (sender, e) =>
+        //{
+        //    if (e.AddedItems.Count > 0)
+        //    {
+        //        if (e.AddedItems[0] is BrowserItem item)
+        //        {
+        //            SelectionChanged(this, e);
+        //        }
+        //    }
+        //};
     }
 
     public Action<object, TreeViewSelectionChangedEventArgs> SelectionChanged
@@ -92,5 +92,14 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Pictures));
         //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Music));
         //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Videos));
+    }
+
+    // TODO: Bind to Property
+    public void Navigate(BrowserItem item)
+    {
+        if (item == null)
+        {
+            return;
+        }
     }
 }
