@@ -51,9 +51,25 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         //};
 
         Loading += ShellNamespaceTreeControl_Loading;
+
+        TreeView.SelectionChanged += (sender, e) =>
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                if (e.AddedItems[0] is BrowserItem item)
+                {
+                    SelectionChanged(this, e);
+                }
+            }
+        };
     }
 
-    public Action<object, SelectionChangedEventArgs> SelectionChanged
+    public Action<object, TreeViewSelectionChangedEventArgs> SelectionChanged
+    {
+        get;
+        internal set;
+    }
+    public TreeViewNode SelectedItem
     {
         get;
         internal set;
