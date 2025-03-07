@@ -57,8 +57,17 @@ public sealed partial class ExplorerBrowser : UserControl
         PrimaryShellTreeView.SelectionChanged += NativeTreeView_SelectionChanged;
         SecondaryShellTreeView.SelectionChanged += NativeTreeView_SelectionChanged;
 
-        PrimaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
-        SecondaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
+        this.Loading += ExplorerBrowser_Loading;
+
+        //        Navigate(PrimaryShellTreeView.Items[0] as BrowserItem);
+
+        //PrimaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
+        //SecondaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
+    }
+
+    private void ExplorerBrowser_Loading(FrameworkElement sender, object args)
+    {
+        _ = Navigate(new BrowserItem(ShellFolder.Desktop.PIDL, true));
     }
 
     /*
@@ -77,7 +86,6 @@ public sealed partial class ExplorerBrowser : UserControl
      */
     private void NativeTreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
         var addedItems = e.AddedItems;
         if (addedItems.Count < 1)
         {
@@ -85,9 +93,8 @@ public sealed partial class ExplorerBrowser : UserControl
         }
 
         Debug.Assert(addedItems.Count == 1);
-        var selectedFolder = addedItems[0] as BrowserItem;
-
         var treeView = sender as TreeView;
+        var selectedFolder = addedItems[0] as BrowserItem;
         var currentTreeNode = treeView?.SelectedItem as TreeViewNode;
         if (currentTreeNode != null) {
             Debug.Print($".NativeTreeView_SelectionChanged(`{selectedFolder?.DisplayName}`, treeNode: {currentTreeNode?.ToString()}).");
@@ -115,10 +122,8 @@ public sealed partial class ExplorerBrowser : UserControl
     internal async Task<HRESULT> Navigate(BrowserItem target)
     {
         var shTargetItem = target.ShellItem;
-
-        //Debug.WriteLineIf(!target.IsFolder, $"Navigate({target.DisplayName}) => is not a folder!");
+        Debug.Assert(shTargetItem is not null);
         // TODO: If no folder, or drive empty, etc... show empty listview with error message
-
 
         // TODO: init ShellNamespaceService
         try
@@ -155,7 +160,7 @@ public sealed partial class ExplorerBrowser : UserControl
                     // TODO: if(child.IsLink) => Add Link-Overlay
 
                     target.ChildItems.Add(ebItem);
-//                    ShellListView.Items.Add(ebItem);
+                    PrimaryShellListView.Items.Add(ebItem);
                 }
             }
             else
@@ -193,5 +198,4 @@ public sealed partial class ExplorerBrowser : UserControl
 
         return HRESULT.S_OK;
     }
-
 }
