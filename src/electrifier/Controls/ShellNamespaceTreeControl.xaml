@@ -33,6 +33,7 @@
             </DataTemplate>
         </Grid.Resources>
         <TreeView x:Name="TreeView"
+                  ItemsSource="{x:Bind Items}"
                   ItemTemplate="{StaticResource BrowserItemTemplate}" />
     </Grid>
 </UserControl>
