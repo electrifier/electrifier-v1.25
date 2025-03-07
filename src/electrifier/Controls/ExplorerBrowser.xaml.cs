@@ -55,6 +55,10 @@ public sealed partial class ExplorerBrowser : UserControl
         DataContext = this;
 
         PrimaryShellTreeView.SelectionChanged += NativeTreeView_SelectionChanged;
+        SecondaryShellTreeView.SelectionChanged += NativeTreeView_SelectionChanged;
+
+        PrimaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
+        SecondaryShellTreeView.Items.Add(new BrowserItem(ShellFolder.Desktop.PIDL, true));
     }
 
     private void NativeTreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,8 +72,18 @@ public sealed partial class ExplorerBrowser : UserControl
 
         Debug.Assert(addedItems.Count == 1);
         var selectedFolder = addedItems[0] as BrowserItem;
-//        var currentTreeNode = PrimaryShellTreeView.NativeTreeView.SelectedItem;
-//        Debug.Print($".NativeTreeView_SelectionChanged(`{selectedFolder?.DisplayName}`, treeNode: {currentTreeNode?.ToString()}).");
+
+        var treeView = sender as TreeView;
+        var currentTreeNode = treeView?.SelectedItem as TreeViewNode;
+        if (currentTreeNode != null) {
+            Debug.Print($".NativeTreeView_SelectionChanged(`{selectedFolder?.DisplayName}`, treeNode: {currentTreeNode?.ToString()}).");
+        }
+
+        //        var currentTreeNode = PrimaryShellTreeView.NativeTreeView.SelectedItem;
+        //         Items.Add(rootItem);
+
+
+        Debug.Print($".NativeTreeView_SelectionChanged(`{selectedFolder?.DisplayName}`, treeNode: {currentTreeNode?.ToString()}).");
 
         // check sender!
         // TODO: ShellTreeView.NativeTreeView.SelectedItem = newTreeNode(find TreeNode
