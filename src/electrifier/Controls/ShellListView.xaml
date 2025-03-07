@@ -32,6 +32,7 @@
         <!-- TODO: Add `DataTable`-Control from CommunityToolkitLabs -->
         <ScrollView VerticalScrollBarVisibility="Visible">
             <ItemsView x:Name="ItemsView"
+                       ItemsSource="{x:Bind Items}"
                        ItemTemplate="{StaticResource ItemsViewBrowserItemTemplate}">
             </ItemsView>
         </ScrollView>
