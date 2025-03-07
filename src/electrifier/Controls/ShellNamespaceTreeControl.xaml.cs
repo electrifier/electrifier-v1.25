@@ -24,5 +24,11 @@ namespace electrifier.Controls
         {
             this.InitializeComponent();
         }
+
+        public Action<object, SelectionChangedEventArgs> SelectionChanged
+        {
+            get;
+            internal set;
+        }
     }
 }

@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserControl
     x:Class="electrifier.Controls.ShellListView"
+    d:DataContext="{d:DesignInstance Type=local:ExplorerBrowser}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:electrifier.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:helpers="using:electrifier.Controls.Helpers"
     mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Grid.ColumnSpan="3"
-                   Text="TODO: Add ShellListView content here."
-                   Margin="12"
-                   Style="{StaticResource SubtitleTextBlockStyle}" />
+        <Grid.Resources>
+            <DataTemplate x:Key="ItemsViewBrowserItemTemplate"
+                          x:DataType="helpers:BrowserItem">
+                <ItemContainer AutomationProperties.Name="{x:Bind DisplayName}">
+                    <Grid Margin="3">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <Image MaxHeight="23"
+                                   Margin="7,0"
+                                   Source="{x:Bind SoftwareBitmap}"
+                                   VerticalAlignment="Stretch" />
+                            <TextBlock Text="{x:Bind DisplayName}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </ItemContainer>
+            </DataTemplate>
+        </Grid.Resources>
+        <!-- TODO: Add `DataTable`-Control from CommunityToolkitLabs -->
+        <ScrollView VerticalScrollBarVisibility="Visible">
+            <ItemsView x:Name="ItemsView"
+                       ItemTemplate="{StaticResource ItemsViewBrowserItemTemplate}">
+            </ItemsView>
+        </ScrollView>
+        <!-- INFO: Use `ScrollView` here, NOT `ScrollViewer` https://stackoverflow.com/questions/77189888/how-to-customize-the-scrollbar-in-winui-3 -->
     </Grid>
 </UserControl>
