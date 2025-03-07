@@ -29,13 +29,13 @@
                 </ItemContainer>
             </DataTemplate>
         </Grid.Resources>
-        <!-- TODO: Add `DataTable`-Control from CommunityToolkitLabs -->
+        <!-- INFO: Use `ScrollView` here, NOT `ScrollViewer` https://stackoverflow.com/questions/77189888/how-to-customize-the-scrollbar-in-winui-3 -->
         <ScrollView VerticalScrollBarVisibility="Visible">
             <ItemsView x:Name="ItemsView"
                        ItemsSource="{x:Bind Items}"
                        ItemTemplate="{StaticResource ItemsViewBrowserItemTemplate}">
             </ItemsView>
+            <!-- TODO: Add `DataTable`-Control from CommunityToolkitLabs for Details View -->
         </ScrollView>
-        <!-- INFO: Use `ScrollView` here, NOT `ScrollViewer` https://stackoverflow.com/questions/77189888/how-to-customize-the-scrollbar-in-winui-3 -->
     </Grid>
 </UserControl>
