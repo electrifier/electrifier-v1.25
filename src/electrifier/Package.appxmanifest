@@ -13,13 +13,13 @@
   <Identity
     Name="31b1f142-e4ab-470a-bcc5-f7c1a5cceb3f"
     Publisher="CN=tajbe"
-    Version="1.0.0.0" />
+    Version="1.25.214.0" />
     
   <mp:PhoneIdentity PhoneProductId="31b1f142-e4ab-470a-bcc5-f7c1a5cceb3f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
     
   <Properties>
     <DisplayName>electrifier</DisplayName>
-    <PublisherDisplayName>tajbe</PublisherDisplayName>
+    <PublisherDisplayName>tajbender</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
