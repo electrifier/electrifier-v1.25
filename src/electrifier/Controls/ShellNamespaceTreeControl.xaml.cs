@@ -43,33 +43,25 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         Items.Add(rootItem);
         rootItem.EnumChildItems();
         rootItem.TreeViewItemIsSelected = true;
+        //rootItem.TreeViewItemIsSelected = true; TODO: Concatenate with reference to rootItem of treeview... rootItem.TreeViewItemIsExpanded = true;
         //SelectedItem = rootItem;
-        //rootItem.TreeViewItemIsSelected = true; TODO: Concatenate with reference to rootItem of treeview.
+
+        NativeTreeView.SelectedItem = rootItem;
 
         Loading += ShellNamespaceTreeControl_Loading;
 
         /*
-        //SelectionChanged = (sender, e) =>
-        //{
-        //    if (e.AddedItems.Count > 0)
-        //    {
-        //        if (e.AddedItems[0] is ShellBrowserItem item)
-        //        {
-        //            var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
-        //            SelectionChanged(this, args);
-        //        }
-        //    }
-        //};
-        //TreeView.SelectionChanged += (sender, e) =>
-        //{
-        //    if (e.AddedItems.Count > 0)
-        //    {
-        //        if (e.AddedItems[0] is ShellBrowserItem item)
-        //        {
-        //            SelectionChanged(this, e);
-        //        }
-        //    }
-        //};
+            SelectionChanged = (sender, e) =>
+            {
+                if (e.AddedItems.Count > 0)
+                {
+                    if (e.AddedItems[0] is ShellBrowserItem item)
+                    {
+                        var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
+                        SelectionChanged(this, args);
+                    }
+                }
+            };
         */
     }
 

@@ -15,6 +15,10 @@ namespace electrifier.Controls.Helpers;
 
 class BrowserItemFactory
 {
+    public static ShellBrowserItem FromPIDL(Shell32.PIDL pidl, bool? isFolder, List<AbstractBrowserItem<ShellItem>>? childItems = default)
+    {
+        return new ShellBrowserItem(pidl, isFolder, childItems);
+    }
 }
 
 /// <summary>Abstract base class ShellBrowserItem of Type <typeparam name="T"/>.</summary>
