@@ -7,11 +7,11 @@
 ### Current Branch
 - Reconfigure
 ---
-# About
+# About.
 ## Successor of legacy native _unfinished_ electrifier (used _Windows Forms_)
 - https://github.com/electrifier/Classic-electrifier
 ----
-# Contributions
+# Contributors.
 ## 3rd Party Packages and Development ⚙ 
 | Who | What | Regards |
 |--------------|:-----------:|:--------|
@@ -21,6 +21,7 @@
 [Dawnbreed](https://www.discogs.com/artist/885335-Dawnbreed), Psychotic Waltz, Silence of Thoughts, King's X
 ---
 
+# Imprint.
 |||
 |:--------------|--------:|
 |©️ Copyright 2025 Thorsten Jung, tajbender|_Eine Scheunenproduktion_. No animals 🐯 were harmed.|
