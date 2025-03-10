@@ -1,16 +1,12 @@
-﻿using System.Runtime.InteropServices;
-using electrifier.Helpers;
-using System.Runtime.InteropServices; // For DllImport
-
+﻿using electrifier.Helpers;
 using Windows.UI.ViewManagement;
 
 namespace electrifier;
 
 public sealed partial class MainWindow : WindowEx
 {
-    private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
-
-    private UISettings settings;
+    private readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
+    private readonly UISettings settings;
 
     public MainWindow()
     {
@@ -18,7 +14,7 @@ public sealed partial class MainWindow : WindowEx
 
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
-        Title = "AppDisplayName".GetLocalized();
+        Title = "electrifier";
 
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
         dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
@@ -26,8 +22,11 @@ public sealed partial class MainWindow : WindowEx
         settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
     }
 
-    // this handles updating the caption button colors correctly when indows system theme is changed
-    // while the app is open
+    /// <summary>
+    /// This method is called when the system theme changes. It updates the caption button colors to match the system theme.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     private void Settings_ColorValuesChanged(UISettings sender, object args)
     {
         // This calls comes off-thread, hence we will need to dispatch it to current app's thread
