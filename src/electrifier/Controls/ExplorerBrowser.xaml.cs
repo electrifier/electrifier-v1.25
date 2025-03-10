@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using electrifier.Controls.Helpers;
+using electrifier.Controls.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -42,11 +43,7 @@ public sealed partial class ExplorerBrowser : UserControl
             //            OnPropertyChanged();
         }
     }
-
-    public event EventHandler<NavigatedEventArgs> Navigated;
-    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
-    //public static ShellNamespaceService ShellNamespaceService => App.GetService<ShellNamespaceService>();
-
+    private Shel32NamespaceService Shel32NamespaceService => App.GetService<Shel32NamespaceService>();
     internal ShellListView ShellListView
     {
         get;
@@ -58,6 +55,9 @@ public sealed partial class ExplorerBrowser : UserControl
 
     [Category("Appearance"), DefaultValue("This group is empty."), Description("The default text that is displayed when an empty group is shown.")]
     public string EmptyGroupText { get; set; } = "This group is empty.";
+
+    public event EventHandler<NavigatedEventArgs> Navigated;
+    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
 
     public ExplorerBrowser()
     {
@@ -98,13 +98,7 @@ public sealed partial class ExplorerBrowser : UserControl
         var addedItems = e.AddedItems;
         var removedItems = e.RemovedItems;
 
-        if (addedItems.Count < 1)
-        {
-            if (removedItems.Count < 1)
-            {
-                Debug.Fail(".NativeTreeView_SelectionChanged() failed.", "None or less Items added nor removed");
-            }
-        }
+        Debug.WriteIf((addedItems.Count < 1 || removedItems.Count < 1), ".NativeTreeView_SelectionChanged() parameter mismatch.", "None or less Items added nor removed");
 
         foreach (var item in addedItems)
         {
