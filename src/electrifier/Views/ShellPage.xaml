@@ -25,14 +25,15 @@
                        Margin="28,0,0,0"/>
         </Grid>
         <NavigationView x:Name="NavigationViewControl"
-            Canvas.ZIndex="0"
-            IsBackButtonVisible="Visible"
-            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-            IsSettingsVisible="True"
-            ExpandedModeThresholdWidth="1280"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
+                        Canvas.ZIndex="0"
+                        CompactModeThresholdWidth="256"
+                        ExpandedModeThresholdWidth="430"
+                        IsBackButtonVisible="Visible"
+                        IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+                        SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
+                        IsSettingsVisible="True"
+                        DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                        Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.AutoSuggestBox>
                 <!--<Button AnimatedIcon="History?!?"/>-->
                 <AutoSuggestBox QueryIcon="Find" AutomationProperties.Name="Search" />
