@@ -22,6 +22,7 @@ public class BrowserItemFactory
         using var folder = new ShellFolder(knownFolderId);
         return new ShellBrowserItem(folder.PIDL, isFolder: true);
     }
+    public static ShellBrowserItem FromShellFolder(ShellFolder shellFolder) => FromPIDL(shellFolder.PIDL, isFolder: true);
     public static ShellBrowserItem HomeShellFolder()
     {
         using var homeShellFolder = new ShellItem(@"c:\");
