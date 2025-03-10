@@ -17,6 +17,7 @@
 
 	<PropertyGroup>
 		<LangVersion>12.0</LangVersion>
+		<PackageIcon>WindowIcon.Vanara.ico</PackageIcon>
 	</PropertyGroup>
 	
   <ItemGroup>
@@ -49,6 +50,10 @@
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\WindowIcon.Vanara.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <Page Update="Controls\ShellNamespaceTreeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
