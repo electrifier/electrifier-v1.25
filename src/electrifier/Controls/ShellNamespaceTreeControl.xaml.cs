@@ -35,18 +35,16 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         InitializeComponent();
         DataContext = this;
         Items = [];
-        //        AdvancedCollectionView = new AdvancedCollectionView(TreeItems, true);
-        //        NativeTreeView.ItemsSource = AdvancedCollectionView;
-
         // TODO: Raise event, and let the parent decide which folders to use as root
-        var rootItem = new ShellBrowserItem(ShellFolder.Desktop.PIDL, isFolder: true);
-        Items.Add(rootItem);
-        rootItem.EnumChildItems();
-        rootItem.TreeViewItemIsSelected = true;
+        Items.Add(new ShellBrowserItem(ShellFolder.Desktop.PIDL, isFolder: true));
+        //AdvancedCollectionView = new AdvancedCollectionView(Items, true);
+        //NativeTreeView.ItemsSource = AdvancedCollectionView;
+
         //rootItem.TreeViewItemIsSelected = true; TODO: Concatenate with reference to rootItem of treeview... rootItem.TreeViewItemIsExpanded = true;
         //SelectedItem = rootItem;
-
-        NativeTreeView.SelectedItem = rootItem;
+        //NativeTreeView.SelectedItem = rootItem;
+        //rootItem.EnumChildItems();
+        //rootItem.TreeViewItemIsSelected = true;
 
         Loading += ShellNamespaceTreeControl_Loading;
 
