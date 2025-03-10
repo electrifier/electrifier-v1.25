@@ -29,40 +29,6 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
     public ObservableCollection<ShellBrowserItem> Items;
     //    internal readonly AdvancedCollectionView AdvancedCollectionView;
     //    public static ShellNamespaceService NamespaceService => App.GetService<ShellNamespaceService>();
-
-    public ShellNamespaceTreeControl()
-    {
-        InitializeComponent();
-        DataContext = this;
-        Items = [];
-        // TODO: Raise event, and let the parent decide which folders to use as root
-        Items.Add(new ShellBrowserItem(ShellFolder.Desktop.PIDL, isFolder: true));
-        //AdvancedCollectionView = new AdvancedCollectionView(Items, true);
-        //NativeTreeView.ItemsSource = AdvancedCollectionView;
-
-        //rootItem.TreeViewItemIsSelected = true; TODO: Concatenate with reference to rootItem of treeview... rootItem.TreeViewItemIsExpanded = true;
-        //SelectedItem = rootItem;
-        //NativeTreeView.SelectedItem = rootItem;
-        //rootItem.EnumChildItems();
-        //rootItem.TreeViewItemIsSelected = true;
-
-        Loading += ShellNamespaceTreeControl_Loading;
-
-        /*
-            SelectionChanged = (sender, e) =>
-            {
-                if (e.AddedItems.Count > 0)
-                {
-                    if (e.AddedItems[0] is ShellBrowserItem item)
-                    {
-                        var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
-                        SelectionChanged(this, args);
-                    }
-                }
-            };
-        */
-    }
-
     public Action<object, TreeViewSelectionChangedEventArgs> SelectionChanged
     {
         get;
@@ -74,19 +40,41 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         internal set;
     }
 
+    public ShellNamespaceTreeControl()
+    {
+        InitializeComponent();
+        DataContext = this;
+        Items = [];
+
+
+        //AdvancedCollectionView = new AdvancedCollectionView(Items, true);
+        //NativeTreeView.ItemsSource = AdvancedCollectionView;
+
+        //rootItem.TreeViewItemIsSelected = true; TODO: Concatenate with reference to rootItem of TreeView... rootItem.TreeViewItemIsExpanded = true;
+        //SelectedItem = rootItem;
+        //NativeTreeView.SelectedItem = rootItem;
+        //rootItem.EnumChildItems();
+        //rootItem.TreeViewItemIsSelected = true;
+
+        Loading += ShellNamespaceTreeControl_Loading;
+
+        /*  SelectionChanged = (sender, e) =>
+            {   if (e.AddedItems.Count > 0)
+                {   if (e.AddedItems[0] is ShellBrowserItem item)
+                    {   var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
+                        SelectionChanged(this, args); } } }; */
+    }
+
     private void ShellNamespaceTreeControl_Loading(FrameworkElement sender, object args)
     {
-
-        //        var homeItem = BrowserItemFactory.FromShellFolder(IExplorerBrowser.HomeShellFolder);
-        //        homeItem.TreeViewItemIsSelected = true;
-        //        Items.Add(homeItem);
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_SkyDrive));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Desktop));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Downloads));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Documents));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Pictures));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Music));
-        //        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Videos));
+        Items.Add(new ShellBrowserItem(ShellFolder.Desktop.PIDL, isFolder: true));
+        Items.Add(BrowserItemFactory.HomeShellFolder());
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_SkyDrive));
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Downloads));
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Documents));
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Pictures));
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Music));
+        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Videos));
     }
 
     // TODO: Bind to Property

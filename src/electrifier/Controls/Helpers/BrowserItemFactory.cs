@@ -10,14 +10,22 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
+using static Vanara.PInvoke.Shell32;
 
 namespace electrifier.Controls.Helpers;
 
-class BrowserItemFactory
+public class BrowserItemFactory
 {
-    public static ShellBrowserItem FromPIDL(Shell32.PIDL pidl, bool? isFolder, List<AbstractBrowserItem<ShellItem>>? childItems = default)
+    public static ShellBrowserItem FromPIDL(Shell32.PIDL pidl, bool? isFolder, List<AbstractBrowserItem<ShellItem>>? childItems = default) => new(pidl, isFolder, childItems);
+    public static ShellBrowserItem FromKnownFolderId(Shell32.KNOWNFOLDERID knownFolderId) 
+    { 
+        using var folder = new ShellFolder(knownFolderId);
+        return new ShellBrowserItem(folder.PIDL, isFolder: true);
+    }
+    public static ShellBrowserItem HomeShellFolder()
     {
-        return new ShellBrowserItem(pidl, isFolder, childItems);
+        using var homeShellFolder = new ShellItem(@"c:\");
+        return new ShellBrowserItem(homeShellFolder.PIDL, isFolder: true);
     }
 }
 
@@ -49,7 +57,7 @@ public abstract class AbstractBrowserItem<T> // TODO: IDisposable
             EnumChildItems();   // Enumerate child items.
         }
 
-        //todo: var propertBag = new ArrayList<object owner, string key, object value>();
+        //todo: var propertyBag = new ArrayList<object owner, string key, object value>();
         //todo: var pb = new PropertyBag();
     }
 
