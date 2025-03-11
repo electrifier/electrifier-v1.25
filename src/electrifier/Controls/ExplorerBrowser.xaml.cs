@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using electrifier.Controls;
 using electrifier.Controls.Helpers;
 using electrifier.Controls.Services;
 using Microsoft.UI.Xaml;
@@ -25,9 +26,16 @@ using static Vanara.PInvoke.ComCtl32;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace electrifier.Controls;
+
+/// <summary>
+/// A WinUI 3 control that displays a <see cref="electrifier.Controls.ShellNamespaceTreeControl"/>
+/// and <see cref="electrifier.Controls.ShellListView"/> for navigating through the shell namespace.
+/// 
+/// This replaces the <see cref="Microsoft.WindowsAPICodePack.Controls.ExplorerBrowser"/> control.
+/// </summary>
 public sealed partial class ExplorerBrowser : UserControl
 {
-    private bool _isLoading;
+    private bool _isLoading = true;
 
     public bool IsLoading
     {
@@ -44,7 +52,7 @@ public sealed partial class ExplorerBrowser : UserControl
         }
     }
     private Shel32NamespaceService Shel32NamespaceService => App.GetService<Shel32NamespaceService>();
-    internal ShellListView ShellListView
+    private ShellListView ShellListView
     {
         get;
     }
@@ -52,7 +60,7 @@ public sealed partial class ExplorerBrowser : UserControl
     /// <summary>The default text that is displayed when an empty folder is shown</summary>
     [Category("Appearance"), DefaultValue("This folder is empty."), Description("The default text that is displayed when an empty folder is shown.")]
     public string EmptyFolderText { get; set; } = "This folder is empty.";
-
+    /// <summary>The default text that is displayed when an empty group is shown</summary>
     [Category("Appearance"), DefaultValue("This group is empty."), Description("The default text that is displayed when an empty group is shown.")]
     public string EmptyGroupText { get; set; } = "This group is empty.";
 
@@ -75,23 +83,10 @@ public sealed partial class ExplorerBrowser : UserControl
 
     private void ExplorerBrowser_Loading(FrameworkElement sender, object args)
     {
-        //_ = Navigate(new ShellBrowserItem(ShellFolder.Desktop.PIDL, true));
+        PrimaryShellTreeView.Items.Add(new ShellBrowserItem(ShellFolder.Desktop.PIDL, true));
+        PrimaryShellTreeView.Items.FirstOrDefault(new ShellBrowserItem(ShellFolder.Desktop.PIDL, true)).TreeViewItemIsSelected = true;
     }
 
-    /*
-            //SelectionChanged = (sender, e) =>
-            //{
-            //    if (e.AddedItems.Count > 0)
-            //    {
-            //        if (e.AddedItems[0] is ShellBrowserItem item)
-            //        {
-            //            var args = new SelectionChangedEventArgs(Array.Empty<object>(), Array.Empty<object>());
-            //            SelectionChanged(this, args);
-            //        }
-            //    }
-            //};
-
-     */
     private void NativeTreeView_SelectionChanged(object sender, TreeViewSelectionChangedEventArgs e)
     {
         var owner = sender as ShellNamespaceTreeControl;
@@ -131,6 +126,22 @@ public sealed partial class ExplorerBrowser : UserControl
         // => TODO: currentTreeNode as TreeViewNode ; (owner as ShellNamespaceTreeControl)
         _ = Navigate(selectedFolder, owner);
     }
+
+    /*
+    public void Navigate(ShellItem? shellItem,
+        IExplorerBrowser.ExplorerBrowser.ExplorerBrowserNavigationItemCategory category =
+            IExplorerBrowser.ExplorerBrowser.ExplorerBrowserNavigationItemCategory.Default)
+    {
+        Debug.Assert(shellItem != null);
+
+        Debug.WriteLineIf(!shellItem.IsFolder, $"Navigate({shellItem.ToString()}) => is not a folder!");
+        // TODO: If no folder, or drive empty, etc... show empty listview with error message
+
+        // TODO: Find TreeItem here!
+        BrowserItem targetItem = new(shellItem.PIDL, null, null);
+        _currentNavigationTask = Navigate(targetItem);
+    }     
+     */
 
     internal async Task<HRESULT> Navigate(ShellBrowserItem target, ShellNamespaceTreeControl shTreeControl)
     {

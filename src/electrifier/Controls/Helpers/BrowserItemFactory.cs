@@ -17,6 +17,7 @@ namespace electrifier.Controls.Helpers;
 
 public class BrowserItemFactory
 {
+    //public static ShellBrowserItem Desktop() => new ShellBrowserItem();
     public static ShellBrowserItem FromPIDL(Shell32.PIDL pidl, bool? isFolder, List<AbstractBrowserItem<ShellItem>>? childItems = default) => new(pidl, isFolder, childItems);
     public static ShellBrowserItem FromKnownFolderId(Shell32.KNOWNFOLDERID knownFolderId) 
     { 
@@ -26,7 +27,7 @@ public class BrowserItemFactory
     public static ShellBrowserItem FromShellFolder(ShellFolder shellFolder) => FromPIDL(shellFolder.PIDL, isFolder: true);
     public static ShellBrowserItem HomeShellFolder()
     {
-        using var homeShellFolder = new ShellItem(@"c:\");
+        using var homeShellFolder = new ShellItem(@"c:\");  // TODO: Get HomeShellFolder from clsid
         return new ShellBrowserItem(homeShellFolder.PIDL, isFolder: true);
     }
 }

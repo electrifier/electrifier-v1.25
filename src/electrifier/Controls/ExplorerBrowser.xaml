@@ -26,11 +26,18 @@
         <StackPanel x:Name="SideBarStackPanel"
                     Grid.Column="4" 
                     Orientation="Vertical" >
-            <RichTextBlock>
-                <Paragraph>
-                    <Run Text="This is a test of the emergency broadcast system."/>
-                </Paragraph>
-            </RichTextBlock>
+            <FlipView MaxWidth="400" Height="270">
+                <Image Source="ms-appx:///Assets/SampleMedia/cliff.jpg" AutomationProperties.Name="Cliff"/>
+                <Image Source="ms-appx:///Assets/SampleMedia/grapes.jpg" AutomationProperties.Name="Grapes"/>
+                <Image Source="ms-appx:///Assets/SampleMedia/rainier.jpg" AutomationProperties.Name="Rainier"/>
+                <Image Source="ms-appx:///Assets/SampleMedia/sunset.jpg" AutomationProperties.Name="Sunset"/>
+                <Image Source="ms-appx:///Assets/SampleMedia/valley.jpg" AutomationProperties.Name="Valley"/>
+                <FlipView.ItemsPanel >
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </FlipView.ItemsPanel>
+             </FlipView>
         </StackPanel>
     </Grid>
 </UserControl>

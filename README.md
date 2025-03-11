@@ -7,13 +7,12 @@
 ### Current Branch
 - Reconfigure
 ---
-# About.
-## Successor of legacy native _unfinished_ electrifier (used _Windows Forms_)
+## About.
+### Successor of legacy native _unfinished_ electrifier (used _Windows Forms_)
 - https://github.com/electrifier/Classic-electrifier
 ----
 # Contributors.
 ## 🔓 3rd Party Packages, ⚙ or other Contributions
-
 | What | Regards |
 |--------------|:--------|
 | ![Vanara](https://raw.githubusercontent.com/dahall/Vanara/master/docs/icons/Vanara64x64.png) | Support, Help and Inspiration when using [Vanara](https://github.com/dahall/Vanara). Teached that disposing things that didn't belong to you is a bad idea 💡 |

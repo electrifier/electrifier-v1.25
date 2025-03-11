@@ -31,6 +31,13 @@ public sealed partial class ShellListView : UserControl
     {
         this.InitializeComponent();
 
-        //Items.Add(new ShellBrowserItem(ShellFolder.Desktop.PIDL, true));
+//        this.OnGotFocus += ShellListView_GotFocus;
+//        this.OnLostFocus += ShellListView_LostFocus;
+    }
+
+    public void Navigate(ShellBrowserItem shellBrowserItem)
+    {
+        Items.Clear();
+        Items.Add(shellBrowserItem);
     }
 }

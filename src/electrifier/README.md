@@ -1,6 +1,21 @@
-﻿*Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
+﻿# electrifier' read me first
 
-## Getting Started
+## Requirements for Windows App SDK
+
+ > Backtracking: [WinUI 3 official Requirement:](https://github.com/dahall/Vanara/pull/494#issuecomment-2595456933)
+> 
+> > Okay, I found the requirements: https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/system-requirements
+> > _The Windows App SDK has the following minimum system requirements:_
+> > 
+> > * Windows 10, version 1809 (build 17763) or later.
+> > * Visual Studio 2022, version 17.0 or later, with the [required workloads and components](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/set-up-your-development-environment#required-workloads-and-components).
+> > * Visual Studio 2019, version 16.9 or later, with the [required workloads and components](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/set-up-your-development-environment#required-workloads-and-components).
+> > * Windows SDK, version 2004 (build 19041) or later (included with Visual Studio 2019 and 2022 by default).
+> > * If you plan to build .NET apps, you'll also need .NET 6 or later (see [Download .NET](https://dotnet.microsoft.com/en-us/download)).
+
+
+
+## Getting Started to build a Windows App SDK project with Template Studio
 
 Browse and address `TODO:` comments in `View -> Task List` to learn the codebase and understand next steps for turning the generated code into production code.
 
@@ -24,4 +39,8 @@ See [releases](https://github.com/microsoft/TemplateStudio/releases) and [milest
 
 ## Feedback
 
-Bugs and feature requests should be filed at https://aka.ms/templatestudio.
+_Bugs and feature requests should be filed at https://aka.ms/templatestudio._
+
+---
+
+*Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
