@@ -32,7 +32,7 @@ namespace electrifier.Controls;
 
 public sealed partial class ExplorerBrowser : UserControl
 {
-    public ObservableCollection<ShellBrowserItem> CurrentItems;
+    public ObservableCollection<BrowserItem> CurrentItems;
 //    public event EventHandler<Vanara.Windows.Shell.NavigatedEventArgs> Navigated;
 //    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
 //
@@ -45,13 +45,13 @@ public sealed partial class ExplorerBrowser : UserControl
         InitializeComponent();
         DataContext = this;
 
-        PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
-        PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
-        SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
-        SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
+        //PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
+        //PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
+        //SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
+        //SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
     }
 
-    internal async Task<HRESULT> Navigate(ShellBrowserItem target)
+    internal async Task<HRESULT> Navigate(BrowserItem target)
     {
         var shTargetItem = target.ShellItem;
 
@@ -78,10 +78,10 @@ public sealed partial class ExplorerBrowser : UserControl
                 PrimaryShellListView.Items.Clear();
                 foreach (var child in shFolder)
                 {
-                    var ebItem = new ShellBrowserItem(child);
+//                    var ebItem = new BrowserItem(child);
 
-                    target.ChildItems.Add(ebItem);
-                    PrimaryShellListView.Items.Add(ebItem);
+//                    target.ChildItems.Add(ebItem);
+//                    PrimaryShellListView.Items.Add(ebItem);
                 }
             }
             else
@@ -90,7 +90,7 @@ public sealed partial class ExplorerBrowser : UserControl
                 PrimaryShellListView.Items.Clear();
                 foreach (var child in target.ChildItems)
                 {
-                    PrimaryShellListView.Items.Add(child);
+//                    PrimaryShellListView.Items.Add(child);
                 }
             }
 
@@ -121,7 +121,7 @@ public sealed partial class ExplorerBrowser : UserControl
     {
         Debug.Print($".PrimaryShellTreeView_Navigated() to {e.NewLocation.Name}");
 
-        _ = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+//        _ = Navigate(new BrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
     }
 
     private async void SecondaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)
@@ -140,10 +140,10 @@ public sealed partial class ExplorerBrowser : UserControl
                 return;
             }
 
-            var newBrowserItems = new List<ShellBrowserItem>();
+            var newBrowserItems = new List<BrowserItem>();
             foreach (var item in childItems)
             {
-                newBrowserItems.Add(new ShellBrowserItem(new(item.PIDL)));
+                newBrowserItems.Add(new BrowserItem(item.PIDL, null, null));
             }
 
             SecondaryShellListView.AddItems(newBrowserItems);

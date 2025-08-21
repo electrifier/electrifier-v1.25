@@ -62,6 +62,7 @@
   <ItemGroup>
     <Folder Include="Controls\Models\" />
     <Folder Include="Controls\Resources\" />
+    <Folder Include="Controls\Vanara\Contracts\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>

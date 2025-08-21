@@ -1,90 +1,50 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using electrifier.Controls.Helpers;
+using CommunityToolkit.WinUI.Collections;
+using electrifier.Controls.Vanara.Contracts;
+using electrifier.Controls.Vanara.Helpers;
+using electrifier.Controls.Vanara.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Vanara.PInvoke;
-using Vanara.Windows.Shell;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using static Vanara.PInvoke.Shell32;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+// todo: For EnumerateChildren-Calls, add HWND handle
+// todo: See ShellItemCollection, perhaps use this instead of ObservableCollection
+// https://github.com/dahall/Vanara/blob/master/Windows.Shell.Common/ShellObjects/ShellItemArray.cs
 
 namespace electrifier.Controls;
 
-public sealed partial class ShellNamespaceTreeControl : UserControl
+public partial class ShellNamespaceTreeControl : UserControl
 {
-    private TreeView NativeTreeView => TreeView;
-    internal ObservableCollection<ShellBrowserItem> Items;
-
-    public bool AutoExpandAfterSelection
-    {
-        get;
-        set;
-    }
-    public TreeViewNode? SelectedItem => NativeTreeView.SelectedNode as TreeViewNode;
-
-    public delegate void NavigatedEventHandler(object sender, NavigatedEventArgs e);
-    public event NavigatedEventHandler? Navigated;
-
-    // todo: public event TypedEventHandler<ShellNamespaceTreeControl, TreeViewNode> SelectionChanged
-    // todo: public event EventHandler FolderItemsChanged
+    public TreeView NativeTreeView => TreeView;
+    public ObservableCollection<BrowserItem> TreeItems;
+    internal readonly AdvancedCollectionView AdvancedCollectionView;
+    public static ShellNamespaceService NamespaceService => App.GetService<ShellNamespaceService>();
 
     public ShellNamespaceTreeControl()
     {
         InitializeComponent();
         DataContext = this;
-        Items = [];
+        TreeItems = [];
+        AdvancedCollectionView = new AdvancedCollectionView(TreeItems, true);
+        NativeTreeView.ItemsSource = AdvancedCollectionView;
 
-        Loading += OnLoading;
-        NativeTreeView.SelectionChanged += OnSelectionChanged;
+        Loading += ShellNamespaceTreeControl_Loading;
     }
 
-    private void OnLoading(FrameworkElement sender, object args)
-    { // HomeShellFolder
-        var folderItem = new ShellFolder(@"shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}");
-        var newItem = BrowserItemFactory.FromShellFolder(folderItem);
-        Items.Add(newItem);
-        /*
-public static ShellBrowserItem HomeShellFolder() => new(new ShellItem("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}").PIDL);
-         */
-
-        //Items.Add(new ShellBrowserItem(folderItem);
-        // TODO: Items.Add(new ShellBrowserItem(/* Home */, isFolder: true));
-        // TODO: Items.Add(new ShellBrowserItem(/* Gallery */, isFolder: true));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_SkyDrive));
-        // TODO: Add separator and add this as child items of the rootItem as second view option
-        // INFO: The following items are quick access items
-        Items.Add(new ShellBrowserItem(ShellFolder.Desktop));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Downloads));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Documents));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Pictures));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Music));
-        Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Videos));
-
-        Items[2].IsSelected = true;
-    }
-
-    private void OnSelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs e)
+    private void ShellNamespaceTreeControl_Loading(FrameworkElement sender, object args)
     {
-        Debug.WriteIf((e.AddedItems.Count < 1 && e.RemovedItems.Count < 1), "None or less Items added nor removed", ".OnSelectionChanged() parameter mismatch.");
-        if (e.AddedItems[0] is not ShellBrowserItem shellBrowserItem)
-        {
-            Debug.Fail(".OnSelectionChanged(): Invalid item");
-            return;
-        }
-        Navigated?.Invoke(this, new NavigatedEventArgs(new ShellFolder(shellBrowserItem.ShellItem)));
+        // TODO: Raise event, and let the parent decide which folders to use as root
+        var homeItem = BrowserItemFactory.FromShellFolder(IExplorerBrowser.HomeShellFolder);
+        homeItem.TreeViewItemIsSelected = true;
+        TreeItems.Add(homeItem);
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_SkyDrive));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Desktop));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Downloads));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Documents));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Pictures));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Music));
+        TreeItems.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_Videos));
     }
+
+    // TODO: public object ItemFromContainer => NativeTreeView.ItemFromContainer()
 }

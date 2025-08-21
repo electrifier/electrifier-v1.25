@@ -1,39 +1,23 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using CommunityToolkit.WinUI.Collections;
 using electrifier.Controls.Helpers;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Vanara.Windows.Shell;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+// todo: For EnumerateChildren-Calls, add HWND handle
+// todo: See ShellItemCollection, perhaps use this instead of ObservableCollection
+// https://github.com/dahall/Vanara/blob/master/Windows.Shell.Common/ShellObjects/ShellItemArray.cs
 
 namespace electrifier.Controls;
 
-public sealed partial class ShellListView : UserControl
+public partial class ShellListView : UserControl
 {
-    internal ItemsView NativeItemsView => ItemsView;
-
-    public ObservableCollection<ShellBrowserItem> Items
-    {
-        get;
-    }
-
+    public ItemsView NativeItemsView => ItemsView;
+    public ObservableCollection<BrowserItem> Items = [];
     public readonly AdvancedCollectionView AdvancedCollectionView;
 
     public delegate void NavigatedEventHandler(object sender, NavigatedEventArgs e);
@@ -43,18 +27,17 @@ public sealed partial class ShellListView : UserControl
     {
         InitializeComponent();
         DataContext = this;
-
-        Items = [];
         AdvancedCollectionView = new AdvancedCollectionView(Items, true);
         //  TODO: Add custom ItemComparer, which uses Shell32 Comparison
         AdvancedCollectionView.SortDescriptions.Add(new SortDescription(SortDirection.Ascending,
-            new DefaultBrowserItemComparer())); Debug.Assert(NativeItemsView != null, nameof(NativeItemsView) + " != null");
+            new DefaultBrowserItemComparer()));
+        Debug.Assert(NativeItemsView != null, nameof(NativeItemsView) + " != null");
         NativeItemsView.ItemsSource = AdvancedCollectionView;
     }
 
-    public void AddItem(ShellBrowserItem shellBrowserItem) => Items.Add(shellBrowserItem);
+    public void AddItem(BrowserItem shellBrowserItem) => Items.Add(shellBrowserItem);
 
-    public void AddItems(IEnumerable<ShellBrowserItem> shellBrowserItems)
+    public void AddItems(IEnumerable<BrowserItem> shellBrowserItems)
     {
         using (AdvancedCollectionView.DeferRefresh())
         {
@@ -81,7 +64,7 @@ public sealed partial class ShellListView : UserControl
     {
         public int Compare(object? x, object? y)
         {
-            if (x is not ShellBrowserItem left || y is not ShellBrowserItem right)
+            if (x is not BrowserItem left || y is not BrowserItem right)
             {
                 return new Comparer(CultureInfo.InvariantCulture).Compare(x, y);
             }
@@ -101,7 +84,7 @@ public sealed partial class ShellListView : UserControl
         {
             try
             {
-                var shellBrowserItem = (NativeItemsView.SelectedItem) as ShellBrowserItem;
+                var shellBrowserItem = (NativeItemsView.SelectedItem) as BrowserItem;
                 var shellItem = shellBrowserItem?.ShellItem;
                 Debug.Assert(shellItem != null, nameof(shellItem) + " != null");
                 if (shellItem.IsFolder)
