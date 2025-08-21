@@ -19,6 +19,12 @@
     <PackageIcon>Assets/WindowIcon.ico</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Controls\Vanara\**" />
+    <EmbeddedResource Remove="Controls\Vanara\**" />
+    <None Remove="Controls\Vanara\**" />
+    <Page Remove="Controls\Vanara\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Controls\ExplorerBrowser.xaml" />
     <None Remove="Controls\ShellListView.xaml" />
     <None Remove="Controls\ShellNamespaceTreeControl.xaml" />
@@ -62,9 +68,11 @@
   <ItemGroup>
     <Folder Include="Controls\Models\" />
     <Folder Include="Controls\Resources\" />
-    <Folder Include="Controls\Vanara\Contracts\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="Controls\Vanara\**" />
+  </ItemGroup>
 </Project>
