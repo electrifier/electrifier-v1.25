@@ -33,9 +33,9 @@ namespace electrifier.Controls;
 public sealed partial class ExplorerBrowser : UserControl
 {
     public ObservableCollection<ShellBrowserItem> CurrentItems;
-    public event EventHandler<Vanara.Windows.Shell.NavigatedEventArgs> Navigated;
-    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
-
+//    public event EventHandler<Vanara.Windows.Shell.NavigatedEventArgs> Navigated;
+//    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
+//
     private Task<HRESULT>? _currentNavigationTask;
     private bool _isLoading;
 
