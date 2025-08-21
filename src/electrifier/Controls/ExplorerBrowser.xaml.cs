@@ -45,7 +45,7 @@ public sealed partial class ExplorerBrowser : UserControl
         InitializeComponent();
         DataContext = this;
 
-        //PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
+        PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
         //PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
         //SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
         //SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
@@ -78,10 +78,10 @@ public sealed partial class ExplorerBrowser : UserControl
                 PrimaryShellListView.Items.Clear();
                 foreach (var child in shFolder)
                 {
-//                    var ebItem = new BrowserItem(child);
+                    var ebItem = new BrowserItem(child.PIDL, null, null);
 
-//                    target.ChildItems.Add(ebItem);
-//                    PrimaryShellListView.Items.Add(ebItem);
+                    target.ChildItems.Add(ebItem);
+                    PrimaryShellListView.Items.Add(ebItem);
                 }
             }
             else
@@ -121,7 +121,7 @@ public sealed partial class ExplorerBrowser : UserControl
     {
         Debug.Print($".PrimaryShellTreeView_Navigated() to {e.NewLocation.Name}");
 
-//        _ = Navigate(new BrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+        _ = Navigate(new BrowserItem(e.NewLocation.PIDL, null, null));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
     }
 
     private async void SecondaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)
@@ -160,4 +160,41 @@ public sealed partial class ExplorerBrowser : UserControl
             throw;
         }
     }
+
+//    /// <summary>Event argument for The Navigated event</summary>
+//    public class NavigatedEventArgs : EventArgs
+//    {
+//        /// <summary>The new location of the explorer browser</summary>
+//        public ShellItem? NewLocation
+//        {
+//            get; set;
+//        }
+//    }
+//
+//    /// <summary>Event argument for The Navigating event</summary>
+//    public class NavigatingEventArgs : EventArgs
+//    {
+//        /// <summary>Set to 'True' to cancel the navigation.</summary>
+//        public bool Cancel
+//        {
+//            get; set;
+//        }
+//
+//        /// <summary>The location being navigated to</summary>
+//        public ShellItem? PendingLocation
+//        {
+//            get; set;
+//        }
+//    }
+//
+//    /// <summary>Event argument for the NavigatinoFailed event</summary>
+//    public class NavigationFailedEventArgs : EventArgs
+//    {
+//        /// <summary>The location the browser would have navigated to.</summary>
+//        public ShellItem? FailedLocation
+//        {
+//            get; set;
+//        }
+//    }
+
 }
