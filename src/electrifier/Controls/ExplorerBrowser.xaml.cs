@@ -32,10 +32,9 @@ namespace electrifier.Controls;
 
 public sealed partial class ExplorerBrowser : UserControl
 {
-    public ObservableCollection<BrowserItem> CurrentItems;
-//    public event EventHandler<Vanara.Windows.Shell.NavigatedEventArgs> Navigated;
-//    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
-//
+    //    public event EventHandler<Vanara.Windows.Shell.NavigatedEventArgs> Navigated;
+    //    public event EventHandler<Vanara.Windows.Shell.NavigationFailedEventArgs> NavigationFailed;
+    //
     private Task<HRESULT>? _currentNavigationTask;
     private bool _isLoading;
 
@@ -46,7 +45,7 @@ public sealed partial class ExplorerBrowser : UserControl
         DataContext = this;
 
         PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
-        //PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
+        PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
         //SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
         //SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
     }
@@ -78,7 +77,17 @@ public sealed partial class ExplorerBrowser : UserControl
                 PrimaryShellListView.Items.Clear();
                 foreach (var child in shFolder)
                 {
-                    var ebItem = new BrowserItem(child.PIDL, null, null);
+                    var shStockIconId = child.IsFolder ? Shell32.SHSTOCKICONID.SIID_FOLDER : Shell32.SHSTOCKICONID.SIID_DOCASSOC;
+                    // SHSTOCKICONID.Link and SHSTOCKICONID.SlowFile have to be used as overlay
+
+                    var softBitmap = await StockIconFactory.GetStockIconBitmapSource(shStockIconId);
+
+                    var ebItem = new BrowserItem(child.PIDL, child.IsFolder)
+                    {
+                        SoftwareBitmap = softBitmap
+                    };
+
+                    // TODO: if(child.IsLink) => Add Link-Overlay
 
                     target.ChildItems.Add(ebItem);
                     PrimaryShellListView.Items.Add(ebItem);
@@ -90,7 +99,11 @@ public sealed partial class ExplorerBrowser : UserControl
                 PrimaryShellListView.Items.Clear();
                 foreach (var child in target.ChildItems)
                 {
-//                    PrimaryShellListView.Items.Add(child);
+                    var ebItem = child as BrowserItem;
+                    if (ebItem is not null)
+                    {
+                        PrimaryShellListView.Items.Add(ebItem);
+                    }
                 }
             }
 
@@ -161,40 +174,40 @@ public sealed partial class ExplorerBrowser : UserControl
         }
     }
 
-//    /// <summary>Event argument for The Navigated event</summary>
-//    public class NavigatedEventArgs : EventArgs
-//    {
-//        /// <summary>The new location of the explorer browser</summary>
-//        public ShellItem? NewLocation
-//        {
-//            get; set;
-//        }
-//    }
-//
-//    /// <summary>Event argument for The Navigating event</summary>
-//    public class NavigatingEventArgs : EventArgs
-//    {
-//        /// <summary>Set to 'True' to cancel the navigation.</summary>
-//        public bool Cancel
-//        {
-//            get; set;
-//        }
-//
-//        /// <summary>The location being navigated to</summary>
-//        public ShellItem? PendingLocation
-//        {
-//            get; set;
-//        }
-//    }
-//
-//    /// <summary>Event argument for the NavigatinoFailed event</summary>
-//    public class NavigationFailedEventArgs : EventArgs
-//    {
-//        /// <summary>The location the browser would have navigated to.</summary>
-//        public ShellItem? FailedLocation
-//        {
-//            get; set;
-//        }
-//    }
+    //    /// <summary>Event argument for The Navigated event</summary>
+    //    public class NavigatedEventArgs : EventArgs
+    //    {
+    //        /// <summary>The new location of the explorer browser</summary>
+    //        public ShellItem? NewLocation
+    //        {
+    //            get; set;
+    //        }
+    //    }
+    //
+    //    /// <summary>Event argument for The Navigating event</summary>
+    //    public class NavigatingEventArgs : EventArgs
+    //    {
+    //        /// <summary>Set to 'True' to cancel the navigation.</summary>
+    //        public bool Cancel
+    //        {
+    //            get; set;
+    //        }
+    //
+    //        /// <summary>The location being navigated to</summary>
+    //        public ShellItem? PendingLocation
+    //        {
+    //            get; set;
+    //        }
+    //    }
+    //
+    //    /// <summary>Event argument for the NavigatinoFailed event</summary>
+    //    public class NavigationFailedEventArgs : EventArgs
+    //    {
+    //        /// <summary>The location the browser would have navigated to.</summary>
+    //        public ShellItem? FailedLocation
+    //        {
+    //            get; set;
+    //        }
+    //    }
 
 }
