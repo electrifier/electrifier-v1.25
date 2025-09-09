@@ -186,3 +186,41 @@ public sealed partial class ExplorerBrowser : UserControl
         }
     }
 }
+
+/// <summary>Event argument for The Navigated event</summary>
+public class NavigatedEventArgs : EventArgs
+{
+    /// <summary>Initializes a new instance of the <see cref="NavigatedEventArgs"/> class.</summary>
+    /// <param name="folder">The folder.</param>
+    public NavigatedEventArgs(ShellFolder folder) => NewLocation = folder;
+
+    /// <summary>The new location of the explorer browser</summary>
+    public ShellItem NewLocation
+    {
+        get; private set;
+    }
+}
+
+/// <summary>Event argument for The Navigating event</summary>
+public class NavigatingEventArgs : CancelEventArgs
+{
+    /// <summary>Initializes a new instance of the <see cref="NavigatingEventArgs"/> class.</summary>
+    /// <param name="pendingLocation">The pending location.</param>
+    public NavigatingEventArgs(ShellItem pendingLocation) => PendingLocation = pendingLocation;
+
+    /// <summary>The location being navigated to.</summary>
+    public ShellItem PendingLocation
+    {
+        get; private set;
+    }
+}
+
+/// <summary>Event argument for the NavigatinoFailed event</summary>
+public class NavigationFailedEventArgs : EventArgs
+{
+    /// <summary>The location the browser would have navigated to.</summary>
+    public ShellItem? FailedLocation
+    {
+        get; set;
+    }
+}
