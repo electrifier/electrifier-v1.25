@@ -32,9 +32,10 @@ public sealed partial class ShellListView : UserControl
     private ObservableCollection<ShellBrowserItem> Items
     {
         get;
+        set;
     }
 
-    public readonly AdvancedCollectionView AdvancedCollectionView;
+    public AdvancedCollectionView AdvancedCollectionView;
 
     public delegate void NavigatedEventHandler(object sender, NavigatedEventArgs e);
     public event NavigatedEventHandler? Navigated;
@@ -48,12 +49,20 @@ public sealed partial class ShellListView : UserControl
         AdvancedCollectionView = new AdvancedCollectionView(Items, true);
         Debug.Assert(NativeItemsView != null, nameof(NativeItemsView) + " != null");
         NativeItemsView.ItemsSource = AdvancedCollectionView;
+        AdvancedCollectionView.SortDescriptions.Add(new SortDescription("IsFolder", SortDirection.Descending));
+        AdvancedCollectionView.SortDescriptions.Add(new SortDescription("DisplayName", SortDirection.Ascending));
     }
 
-    public void SetItemSource(object itemSource)
+    public void SetItemSource(IEnumerable<ShellBrowserItem> itemSource)
     {
         //AdvancedCollectionView.Source = itemSource;
-        NativeItemsView.ItemsSource = itemSource;
+        Items = new ObservableCollection<ShellBrowserItem>(itemSource);
+        AdvancedCollectionView = new AdvancedCollectionView(Items, true);
+        Debug.Assert(NativeItemsView != null, nameof(NativeItemsView) + " != null");
+        NativeItemsView.ItemsSource = AdvancedCollectionView;
+        AdvancedCollectionView.SortDescriptions.Add(new SortDescription("IsFolder", SortDirection.Descending));
+        AdvancedCollectionView.SortDescriptions.Add(new SortDescription("DisplayName", SortDirection.Ascending));
+        //Items.Source = itemSource;
     }
 
     public void AddItem(ShellBrowserItem shellBrowserItem) => AdvancedCollectionView.Add(shellBrowserItem);

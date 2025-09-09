@@ -109,6 +109,7 @@ public sealed partial class ExplorerBrowser : UserControl
                 //PrimaryShellListView.ClearItems();
                 //PrimaryShellListView.AddItems(target.ChildItems);
             }
+            PrimaryShellListView.SetItemSource(target.ChildItems);
 
             // TODO: Load folder-open icon and overlays
         }
