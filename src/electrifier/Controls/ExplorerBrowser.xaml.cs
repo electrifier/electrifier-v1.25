@@ -17,6 +17,8 @@ public sealed partial class ExplorerBrowser : UserControl
     public event EventHandler<NavigatingEventArgs> Navigating;
     public event EventHandler<NavigationFailedEventArgs> NavigationFailed;
 
+    public ShellItem? CurrentFolder => History.Current;
+
     public readonly ShellNavigationHistory History = new();
     //private Vanara.Windows.Shell.NavigationLogDirection _navigationLogDirection;
     //private Vanara.Windows.Shell.ShellBrowserViewMode _viewMode = ShellBrowserViewMode.Details;
@@ -77,6 +79,7 @@ public sealed partial class ExplorerBrowser : UserControl
         // TODO: init ShellNamespaceService
         try
         {
+            History.Add(target.ShellItem);
             if (_currentNavigationTask is { IsCompleted: false })
             {
                 Debug.Print("ERROR! <_currentNavigationTask> already running");
@@ -94,13 +97,13 @@ public sealed partial class ExplorerBrowser : UserControl
                 //PrimaryShellListView.ClearItems();
                 //DispatcherQueue.TryEnqueue(() =>
                 //{
-                    foreach (var child in shFolder)
-                    {
-                        var ebItem = new ShellBrowserItem(child);
+                foreach (var child in shFolder)
+                {
+                    var ebItem = new ShellBrowserItem(child);
 
-                        target.ChildItems.Add(ebItem);
-                        //PrimaryShellListView.AddItem(ebItem);
-                    }
+                    target.ChildItems.Add(ebItem);
+                    //PrimaryShellListView.AddItem(ebItem);
+                }
                 //});
             }
             else
@@ -183,6 +186,44 @@ public sealed partial class ExplorerBrowser : UserControl
         {
             Debug.Fail($"[Error] Navigate(<{e.NewLocation.Name}>) failed, reason unknown: {ex.Message}");
             throw;
+        }
+    }
+
+    private void BackAppBarButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        if (History.CanSeekBackward)
+        {
+            var shItem = History.SeekBackward();
+            Debug.Print($".BackAppBarButtonClick() to {shItem?.Name} (coming from {History.Current})");
+            var newItem = new ShellBrowserItem(shItem);
+            _ = Navigate(newItem);
+        }
+    }
+
+    private void ForwardAppBarButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        if (History.CanSeekForward)
+        {
+            var shItem = History.SeekForward();
+            Debug.Print($".ForwardAppBarButtonClick() to {shItem?.Name} (coming from {History.Current})");
+            var newItem = new ShellBrowserItem(shItem);
+            _ = Navigate(newItem);
+        }
+    }
+
+    private void UpParentAppBarButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        if ((History.Count > 0) && (History.Current != null))
+        {
+            var prnt = History.Current.Parent;
+            Debug.Print($".UpParentAppBarButtonClick() to {prnt?.Name} (coming from {History.Current})");
+            if (prnt == null)
+            {
+                Debug.Print(".UpParentAppBarButtonClick() => No parent, at root?");
+                return;
+            }
+            var parentItem = new ShellBrowserItem(prnt);
+            _ = Navigate(parentItem);
         }
     }
 }

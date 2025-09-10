@@ -22,12 +22,15 @@
                     Grid.Row="0"
                     DefaultLabelPosition="Collapsed"
                     HorizontalAlignment="Left">
-            <AppBarButton Icon="Back"
+            <AppBarButton Click="BackAppBarButtonClick"
+                          Icon="Back"
                           Label="Back" />
-            <AppBarButton Icon="Forward"
+            <AppBarButton Click="ForwardAppBarButtonClick"
+                          Icon="Forward"
                           Label="Forward" />
-            <AppBarButton Icon="Up"
-                          Label="Parent Folder" />
+            <AppBarButton Click="UpParentAppBarButtonClick"
+                          Icon="Up"
+                          Label="Up to Parent Folder" />
             <AppBarSeparator />
             <AppBarButton Icon="OpenFile"
                           Label="New">
