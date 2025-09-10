@@ -25,48 +25,36 @@ public sealed partial class ExplorerBrowser : UserControl
     /// <summary>Fires when the Items collection changes.</summary>
     public event EventHandler? ItemsChanged;
 
-
     /// <summary>Fires when the SelectedItems collection changes.</summary>
     public event EventHandler? SelectionChanged;
-
-
-    /*
-     public enum NavigationLogDirection
-{
-	/// <summary>Navigates forward through the navigation log</summary>
-	Forward,
-
-	/// <summary>Navigates backward through the travel log</summary>
-	Backward
-}
-
-     
-     
-     *      var e = new CurrentChangingEventArgs();
-            OnCurrentChanging(e);
-            if (e.Cancel)
-            {
-                return false;
-            }
-
-            CurrentPosition = i;
-            OnCurrentChanged(null!);
-            return true;
-     */
-
-    private Task<HRESULT>? _currentNavigationTask;
-    private bool _isLoading;
-
 
     public ExplorerBrowser()
     {
         InitializeComponent();
         DataContext = this;
 
+        Navigated += ExplorerBrowser_Navigated;
+        Navigating += ExplorerBrowser_Navigating;
+        NavigationFailed += ExplorerBrowser_NavigationFailed;
+
         PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
         PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
         SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
         SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
+    }
+
+    private void ExplorerBrowser_Navigated(object? sender, NavigatedEventArgs e)
+    {
+        Debug.Print($".ExplorerBrowser_Navigated() to {e.NewLocation.Name}");
+    }
+    private void ExplorerBrowser_Navigating(object? sender, NavigatingEventArgs e)
+    {
+        Debug.Print($".ExplorerBrowser_Navigating() to {e.PendingLocation.Name}");
+        History.Add(e.PendingLocation);
+    }
+    private void ExplorerBrowser_NavigationFailed(object? sender, NavigationFailedEventArgs e)
+    {
+        Debug.Fail($".ExplorerBrowser_NavigationFailed() to {e.FailedLocation?.Name}");
     }
 
     internal async Task<HRESULT> Navigate(ShellBrowserItem target)
@@ -79,14 +67,6 @@ public sealed partial class ExplorerBrowser : UserControl
         // TODO: init ShellNamespaceService
         try
         {
-            History.Add(target.ShellItem);
-            if (_currentNavigationTask is { IsCompleted: false })
-            {
-                Debug.Print("ERROR! <_currentNavigationTask> already running");
-                // cancel current task
-                //CurrentNavigationTask
-            }
-
             PrimaryShellListView.SetItemSource(target.ChildItems);
 
             if (target.ChildItems.Count <= 0)
@@ -130,6 +110,7 @@ public sealed partial class ExplorerBrowser : UserControl
         }
         finally
         {
+            Navigated.Invoke(this, new NavigatedEventArgs(shTargetItem as ShellFolder ?? ShellFolder.Desktop));
             //IsLoading = false;
         }
 
