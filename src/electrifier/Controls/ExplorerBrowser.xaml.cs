@@ -63,10 +63,12 @@ public sealed partial class ExplorerBrowser : UserControl
 
         Debug.WriteLineIf(!shTargetItem.IsFolder, $".WARN: Navigate({target.DisplayName}) => is not a folder!");
         // TODO: If no folder, or drive empty, etc... show empty listview with error message
+        // INFO: put this test into ShellNamespaceService, see older implementation
 
         // TODO: init ShellNamespaceService
         try
         {
+            Navigating.Invoke(this, new NavigatingEventArgs(shTargetItem));
             PrimaryShellListView.SetItemSource(target.ChildItems);
 
             if (target.ChildItems.Count <= 0)
@@ -74,23 +76,16 @@ public sealed partial class ExplorerBrowser : UserControl
                 using var shFolder = new ShellFolder(target.ShellItem);
 
                 target.ChildItems.Clear();
-                //PrimaryShellListView.ClearItems();
-                //DispatcherQueue.TryEnqueue(() =>
-                //{
                 foreach (var child in shFolder)
                 {
                     var ebItem = new ShellBrowserItem(child);
 
                     target.ChildItems.Add(ebItem);
-                    //PrimaryShellListView.AddItem(ebItem);
                 }
-                //});
             }
             else
             {
                 Debug.WriteLine(".Navigate() => Cache hit!");
-                //PrimaryShellListView.ClearItems();
-                //PrimaryShellListView.AddItems(target.ChildItems);
             }
             PrimaryShellListView.SetItemSource(target.ChildItems);
 
@@ -98,20 +93,19 @@ public sealed partial class ExplorerBrowser : UserControl
         }
         catch (COMException comEx)
         {
-            Debug.Fail(
-                $"[Error] Navigate(<{target}>) failed. COMException: <HResult: {comEx.HResult}>: `{comEx.Message}`");
-
-            return new HRESULT(comEx.HResult);
+            Debug.Fail($"[Error] Navigate(<{target}>) failed. COMException: <HResult: {comEx.HResult}>: `{comEx.Message}`");
+            NavigationFailed.Invoke(this, new NavigationFailedEventArgs(shTargetItem));
+            throw;
         }
         catch (Exception ex)
         {
             Debug.Fail($"[Error] Navigate(<{target}>) failed, reason unknown: {ex.Message}");
+            NavigationFailed.Invoke(this, new NavigationFailedEventArgs(shTargetItem));
             throw;
         }
         finally
         {
             Navigated.Invoke(this, new NavigatedEventArgs(shTargetItem as ShellFolder ?? ShellFolder.Desktop));
-            //IsLoading = false;
         }
 
         return HRESULT.S_OK;
@@ -176,6 +170,7 @@ public sealed partial class ExplorerBrowser : UserControl
         {
             var shItem = History.SeekBackward();
             Debug.Print($".BackAppBarButtonClick() to {shItem?.Name} (coming from {History.Current})");
+            // TODO: Error handling if shItem is null or navigation fails, call NavigationFailed then
             var newItem = new ShellBrowserItem(shItem);
             _ = Navigate(newItem);
         }
@@ -214,7 +209,7 @@ public class NavigatedEventArgs : EventArgs
 {
     /// <summary>Initializes a new instance of the <see cref="NavigatedEventArgs"/> class.</summary>
     /// <param name="folder">The folder.</param>
-    public NavigatedEventArgs(ShellFolder folder) => NewLocation = folder;
+    public NavigatedEventArgs(ShellItem folder) => NewLocation = folder ?? throw new ArgumentNullException(nameof(folder));
 
     /// <summary>The new location of the explorer browser</summary>
     public ShellItem NewLocation
@@ -228,7 +223,7 @@ public class NavigatingEventArgs : CancelEventArgs
 {
     /// <summary>Initializes a new instance of the <see cref="NavigatingEventArgs"/> class.</summary>
     /// <param name="pendingLocation">The pending location.</param>
-    public NavigatingEventArgs(ShellItem pendingLocation) => PendingLocation = pendingLocation;
+    public NavigatingEventArgs(ShellItem pendingLocation) => PendingLocation = pendingLocation ?? throw new ArgumentNullException(nameof(pendingLocation));
 
     /// <summary>The location being navigated to.</summary>
     public ShellItem PendingLocation
@@ -240,9 +235,23 @@ public class NavigatingEventArgs : CancelEventArgs
 /// <summary>Event argument for the NavigatinoFailed event</summary>
 public class NavigationFailedEventArgs : EventArgs
 {
+    /// <summary>Initializes a new instance of the <see cref="NavigationFailedEventArgs"/> class.</summary>
+    /// <param name="failedLocation">The failed location.</param>
+    public NavigationFailedEventArgs(ShellItem failedLocation) => FailedLocation = failedLocation ?? throw new ArgumentNullException(nameof(failedLocation));
+
+    public Exception? CausalException
+    {
+        get; private set;
+    }
+
+    public HRESULT? HResult
+    {
+        get; private set;
+    }
+
     /// <summary>The location the browser would have navigated to.</summary>
     public ShellItem? FailedLocation
     {
-        get; set;
+        get; private set;
     }
 }
