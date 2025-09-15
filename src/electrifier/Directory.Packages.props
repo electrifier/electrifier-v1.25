@@ -13,6 +13,7 @@
     <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.5.250108004" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="System.Text.Json" Version="9.0.2" />
+    <PackageVersion Include="Vanara.PInvoke.Shell32" Version="4.1.6" />
     <PackageVersion Include="Vanara.Windows.Shell" Version="4.1.6" />
     <PackageVersion Include="Vanara.Windows.Shell.Common" Version="4.1.6" />
     <PackageVersion Include="WinUIEx" Version="2.3.2" />

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using electrifier.Controls.Helpers;
+using electrifier.Controls.Services;
 using Microsoft.UI.Xaml.Controls;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
@@ -38,7 +39,7 @@ public sealed partial class ExplorerBrowser : UserControl
         NavigationFailed += ExplorerBrowser_NavigationFailed;
 
         PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
-        PrimaryShellListView.Navigated += PrimaryShellTreeView_Navigated;
+        PrimaryShellListView.Navigated += PrimaryShellListView_Navigated;
         SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
         SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
     }
@@ -90,6 +91,7 @@ public sealed partial class ExplorerBrowser : UserControl
             PrimaryShellListView.SetItemSource(target.ChildItems);
 
             // TODO: Load folder-open icon and overlays
+            // TODO: IconExtractor can extract folder bitmaps with content preview
         }
         catch (COMException comEx)
         {
@@ -111,7 +113,8 @@ public sealed partial class ExplorerBrowser : UserControl
         return HRESULT.S_OK;
     }
 
-
+    // SingleClick => Navigate
+    // DoubleClick => Navigate & Expand
     private async void PrimaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)
     {
         Debug.Print($".PrimaryShellTreeView_Navigated() to {e.NewLocation.Name}");
@@ -124,7 +127,15 @@ public sealed partial class ExplorerBrowser : UserControl
 
 
 
-        _ = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+        var navtask = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+        await navtask;
+    }
+
+    private async void PrimaryShellListView_Navigated(object sender, NavigatedEventArgs e)
+    {
+        Debug.Print($".PrimaryShellListView_Navigated() to {e.NewLocation.Name}");
+        var navtask = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+        await navtask;
     }
 
     private async void SecondaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)

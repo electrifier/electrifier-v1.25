@@ -21,6 +21,8 @@ namespace electrifier.Controls.Services;
 [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
 internal class Shel32NamespaceService
 {
+    static Shel32NamespaceService() => Shell32.FileIconInit(false);
+
     private static readonly Dictionary<Shell32.SHSTOCKICONID, SoftwareBitmapSource> StockIconDictionary = [];
 
     /// <summary>The default text that is displayed when an empty folder is shown</summary>

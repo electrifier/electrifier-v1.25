@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
     <PackageReference Include="Vanara.Windows.Shell.Common" />
     <PackageReference Include="WinUIEx" />
   </ItemGroup>

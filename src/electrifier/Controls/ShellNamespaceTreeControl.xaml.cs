@@ -84,7 +84,7 @@ public static ShellBrowserItem HomeShellFolder() => new(new ShellItem("shell:::{
         Debug.WriteIf((e.AddedItems.Count < 1 && e.RemovedItems.Count < 1), "None or less Items added nor removed", ".OnSelectionChanged() parameter mismatch.");
         if (e.AddedItems[0] is not ShellBrowserItem shellBrowserItem)
         {
-            Debug.Fail(".OnSelectionChanged(): Invalid item");
+            Debug.Fail("OnSelectionChanged(): Invalid item");
             return;
         }
         Navigated?.Invoke(this, new NavigatedEventArgs(new ShellFolder(shellBrowserItem.ShellItem)));
