@@ -76,6 +76,7 @@ public sealed partial class ExplorerBrowser : UserControl
             {
                 using var shFolder = new ShellFolder(target.ShellItem);
 
+                // TODO: See ShellCategorizer for filtering and grouping
                 target.ChildItems.Clear();
                 foreach (var child in shFolder)
                 {

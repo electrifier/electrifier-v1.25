@@ -44,6 +44,7 @@ public sealed partial class ShellNamespaceTreeControl : UserControl
         Items = [];
 
         Loading += OnLoading;
+        NativeTreeView.DoubleTapped += OnDoubleTapped;
         NativeTreeView.SelectionChanged += OnSelectionChanged;
     }
 
@@ -76,6 +77,24 @@ public static ShellBrowserItem HomeShellFolder() => new(new ShellItem("shell:::{
         Items.Add(BrowserItemFactory.FromKnownFolderId(Shell32.KNOWNFOLDERID.FOLDERID_ThisPCDesktop)); // todo: WARN: Check why this leads to `SyncCenter`?
 
         Items[1].IsSelected = true;
+    }
+
+    private void OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+    {
+        if (!e.Handled)
+        {
+            Debug.WriteLine($".ShellNamespaceTreeControl_OnDoubleTapped({e.ToString()})");
+
+            if (SelectedItem is null)
+            {
+                Debug.Fail("OnDoubleTapped(): No item selected");
+                return;
+            }
+
+            // TODO: Ensure children are enumerated
+            SelectedItem.IsExpanded = true;
+            e.Handled = true;
+        }
     }
 
     private void OnSelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs e)
