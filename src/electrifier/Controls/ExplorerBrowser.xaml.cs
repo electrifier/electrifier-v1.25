@@ -40,8 +40,6 @@ public sealed partial class ExplorerBrowser : UserControl
 
         PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
         PrimaryShellListView.Navigated += PrimaryShellListView_Navigated;
-        SecondaryShellTreeView.Navigated += SecondaryShellTreeView_Navigated;
-        SecondaryShellListView.Navigated += SecondaryShellTreeView_Navigated;
     }
 
     private void ExplorerBrowser_Navigated(object? sender, NavigatedEventArgs e)
@@ -140,43 +138,6 @@ public sealed partial class ExplorerBrowser : UserControl
         Debug.Print($".PrimaryShellListView_Navigated() to {e.NewLocation.Name}");
         var navtask = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
         await navtask;
-    }
-
-    private async void SecondaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)
-    {
-        Debug.Print($".SecondaryShellTreeView_Navigated() to {e.NewLocation.Name}");
-        SecondaryShellListView.ClearItems();
-
-        try
-        {
-            var rootItem = new ShellFolder(e.NewLocation.PIDL);
-
-            var childItems = rootItem?.EnumerateChildren(FolderItemFilter.Folders | FolderItemFilter.NonFolders | FolderItemFilter.IncludeHidden);
-            if (childItems == null)
-            {
-                Debug.Fail($"[Error] Navigate(<{e.NewLocation.Name}>) failed. No items found.");
-                return;
-            }
-
-            var newBrowserItems = new List<ShellBrowserItem>();
-            foreach (var item in childItems)
-            {
-                newBrowserItems.Add(new ShellBrowserItem(new(item.PIDL)));
-            }
-
-            SecondaryShellListView.AddItems(newBrowserItems);
-        }
-        catch (COMException comEx)
-        {
-            Debug.Fail(
-                $"[Error] Navigate(<{e.NewLocation.Name}>) failed. COMException: <HResult: {comEx.HResult}>: `{comEx.Message}`");
-            //NavigationFailed?.Invoke(this, new NavigationFailedEventArgs(comEx));
-        }
-        catch (Exception ex)
-        {
-            Debug.Fail($"[Error] Navigate(<{e.NewLocation.Name}>) failed, reason unknown: {ex.Message}");
-            throw;
-        }
     }
 
     private void BackAppBarButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

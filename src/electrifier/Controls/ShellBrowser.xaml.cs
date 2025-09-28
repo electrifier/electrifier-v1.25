@@ -22,8 +22,7 @@ public sealed partial class ShellBrowser : UserControl
 {
     public ShellBrowser()
     {
-        InitializeComponent();
         DefaultStyleKey = typeof(ShellBrowser);
-
+        InitializeComponent();
     }
 }
