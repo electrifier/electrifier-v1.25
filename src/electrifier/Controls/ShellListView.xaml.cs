@@ -124,7 +124,7 @@ public sealed partial class ShellListView : UserControl
                     var shFolder = new ShellFolder(shellItem);
                     if (shFolder != null)
                     {
-                        Navigated?.Invoke(this, new NavigatedEventArgs(shFolder));
+                        //TODO: Navigated?.Invoke(this, new NavigatedEventArgs(shFolder));
                         //Navigated?.BeginInvoke(this, item, null, null);
                         e.Handled = true;
                     }

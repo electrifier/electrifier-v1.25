@@ -106,6 +106,6 @@ public static ShellBrowserItem HomeShellFolder() => new(new ShellItem("shell:::{
             Debug.Fail("OnSelectionChanged(): Invalid item");
             return;
         }
-        Navigated?.Invoke(this, new NavigatedEventArgs(new ShellFolder(shellBrowserItem.ShellItem)));
+        Navigated?.Invoke(this, new NavigatedEventArgs(shellBrowserItem));
     }
 }

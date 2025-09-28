@@ -108,7 +108,7 @@ public sealed partial class ExplorerBrowser : UserControl
         }
         finally
         {
-            Navigated.Invoke(this, new NavigatedEventArgs(shTargetItem as ShellFolder ?? ShellFolder.Desktop));
+            //Navigated.Invoke(this, new NavigatedEventArgs(shTargetItem as ShellFolder ?? ShellFolder.Desktop));
         }
 
         return HRESULT.S_OK;
@@ -120,10 +120,13 @@ public sealed partial class ExplorerBrowser : UserControl
     {
         Debug.Print($".PrimaryShellTreeView_Navigated() to {e.NewLocation.Name}");
 
+        var target = e.NewLocation;
+
         //var tnode = e.NewLocation;
         var treeNode = PrimaryShellTreeView.SelectedItem;
         var cnt = treeNode?.Content;
-        //treeNode.IsSelected = true;
+        //browserItem.IsSelected = true;
+        var shBrowserItem = cnt as ShellBrowserItem;
 
 
 
@@ -221,7 +224,17 @@ public class NavigatedEventArgs : EventArgs
 {
     /// <summary>Initializes a new instance of the <see cref="NavigatedEventArgs"/> class.</summary>
     /// <param name="folder">The folder.</param>
-    public NavigatedEventArgs(ShellItem folder) => NewLocation = folder ?? throw new ArgumentNullException(nameof(folder));
+    public NavigatedEventArgs(ShellBrowserItem browserItem)
+    {
+        ExplorerBrowserItem = browserItem ?? throw new ArgumentNullException(nameof(browserItem));
+        NewLocation = ExplorerBrowserItem.ShellItem;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="NavigatedEventArgs"/> class.</summary>
+    /// <param name="folder">The folder.</param>
+    //public NavigatedEventArgs(ShellItem folder) => NewLocation = folder ?? throw new ArgumentNullException(nameof(folder));
+
+    public ShellBrowserItem? ExplorerBrowserItem;
 
     /// <summary>The new location of the explorer browser</summary>
     public ShellItem NewLocation
