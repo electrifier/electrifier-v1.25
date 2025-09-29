@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\Models\" />
+    <Folder Include="Controls\Themes\" />
     <Folder Include="Controls\Resources\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

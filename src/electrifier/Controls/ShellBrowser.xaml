@@ -24,6 +24,6 @@
         </Border>
         <controls:ContentSizer Grid.Column="1"
                                TargetControl="{x:Bind SideContent}" />
-        <local:ShellListView />
+        <local:ShellListView Grid.Column="2" />
     </Grid>
 </UserControl>
