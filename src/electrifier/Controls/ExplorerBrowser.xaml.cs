@@ -20,7 +20,7 @@ public sealed partial class ExplorerBrowser : UserControl
 
     public ShellItem? CurrentFolder => History.Current;
 
-    public readonly ShellNavigationHistory History = new();
+    public readonly ShellNavigationHistory History = new(); // Save Selection , ScrollPosition, etc. to global history
     //private Vanara.Windows.Shell.NavigationLogDirection _navigationLogDirection;
     //private Vanara.Windows.Shell.ShellBrowserViewMode _viewMode = ShellBrowserViewMode.Details;
     /// <summary>Fires when the Items collection changes.</summary>

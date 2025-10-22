@@ -237,6 +237,7 @@
         </CommandBar>
         <SplitView x:Name="PrimarySplitView"
                    Grid.Column="0"
+                   Grid.ColumnSpan="2"
                    Grid.Row="1"
                    PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                    IsPaneOpen="True"
@@ -298,7 +299,5 @@
                 </CommandBar>
             </Grid>
         </SplitView>
-        <local:ShellBrowser                    Grid.Column="1"
-                                               Grid.Row="1" />
     </Grid>
 </UserControl>
