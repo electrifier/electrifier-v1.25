@@ -38,8 +38,8 @@ public sealed partial class ExplorerBrowser : UserControl
         Navigating += ExplorerBrowser_Navigating;
         NavigationFailed += ExplorerBrowser_NavigationFailed;
 
-        PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
-        PrimaryShellListView.Navigated += PrimaryShellListView_Navigated;
+//        PrimaryShellTreeView.Navigated += PrimaryShellTreeView_Navigated;
+//        PrimaryShellListView.Navigated += PrimaryShellListView_Navigated;
     }
 
     private void ExplorerBrowser_Navigated(object? sender, NavigatedEventArgs e)
@@ -68,7 +68,7 @@ public sealed partial class ExplorerBrowser : UserControl
         try
         {
             Navigating.Invoke(this, new NavigatingEventArgs(shTargetItem));
-            PrimaryShellListView.SetItemSource(target.ChildItems);
+            //PrimaryShellListView.SetItemSource(target.ChildItems);
 
             if (target.ChildItems.Count <= 0)
             {
@@ -87,7 +87,7 @@ public sealed partial class ExplorerBrowser : UserControl
             {
                 Debug.WriteLine(".Navigate() => Cache hit!");
             }
-            PrimaryShellListView.SetItemSource(target.ChildItems);
+            //PrimaryShellListView.SetItemSource(target.ChildItems);       // TODO: Optimize to avoid resetting the ItemSource if already set to the same collection
 
             // TODO: Load folder-open icon and overlays
             // TODO: IconExtractor can extract folder bitmaps with content preview
@@ -121,10 +121,10 @@ public sealed partial class ExplorerBrowser : UserControl
         var target = e.NewLocation;
 
         //var tnode = e.NewLocation;
-        var treeNode = PrimaryShellTreeView.SelectedItem;
-        var cnt = treeNode?.Content;
+        //var treeNode = PrimaryShellTreeView.SelectedItem;
+        //var cnt = treeNode?.Content;
         //browserItem.IsSelected = true;
-        var shBrowserItem = cnt as ShellBrowserItem;
+        //var shBrowserItem = cnt as ShellBrowserItem;
 
 
 
